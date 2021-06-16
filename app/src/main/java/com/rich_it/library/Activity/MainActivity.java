@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initObjects();
+    }
+
+    private void initObjects() {
         sendOtp = findViewById(R.id.sendOtp);
         mAuth = FirebaseAuth.getInstance();
         phoneNoEditText = findViewById(R.id.phoneNoET);
