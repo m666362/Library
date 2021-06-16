@@ -2,7 +2,7 @@ package com.rich_it.library.Model;
 
 public class User {
     String name;
-    String userName;
+    String gender;
     String email;
     String phoneNumber;
     String password;
@@ -10,9 +10,9 @@ public class User {
     public User() {
     }
 
-    public User(String name, String userName, String email, String phoneNumber, String password) {
+    public User(String name, String gender, String email, String phoneNumber, String password) {
         this.name = name;
-        this.userName = userName;
+        this.gender = gender;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -26,12 +26,12 @@ public class User {
         this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getGender() {
+        return gender;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getEmail() {
