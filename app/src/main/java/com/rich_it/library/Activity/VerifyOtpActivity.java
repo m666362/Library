@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -25,25 +24,25 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button sendOtp;
+public class VerifyOtpActivity extends AppCompatActivity implements View.OnClickListener {
     Button verifyOtpButton;
-    EditText phoneNoEditText;
     EditText verifyOtpEt;
     private FirebaseAuth mAuth;
     String verificationCodeBySystem = "";
     String code = "";
+    String phoneNumber = "";
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_verify_otp);
         initObjects();
         requiredTask();
+        sendVerificationCodeToUser(phoneNumber);
     }
 
     private void requiredTask() {
-        sendOtp.setOnClickListener(this::onClick);
         verifyOtpButton.setOnClickListener(this::onClick);
     }
 
@@ -56,19 +55,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void signInTheUserByCredentials(PhoneAuthCredential credential) {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(VerifyOtpActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
-                Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(VerifyOtpActivity.this, UserInformationActivity.class);
+                intent.putExtra("phoneNumber", phoneNumber);
+                startActivity(intent);
             }
         });
     }
 
     private void initObjects() {
-        sendOtp = findViewById(R.id.sendOtp);
+        intent = getIntent();
+        phoneNumber = intent.getStringExtra("phoneNumber");
         verifyOtpButton = findViewById(R.id.verifyOtpButton);
         mAuth = FirebaseAuth.getInstance();
-        phoneNoEditText = findViewById(R.id.phoneNoET);
         verifyOtpEt = findViewById(R.id.otpEt);
     }
 
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                     super.onCodeSent(s, forceResendingToken);
-                    Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
                     verificationCodeBySystem = s;
                 }
 
@@ -88,25 +88,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     code = phoneAuthCredential.getSmsCode();
                     verifyCode(code);
-                    Toast.makeText(MainActivity.this, code, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onVerificationFailed(FirebaseException e) {
-                    Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerifyOtpActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
             };
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.sendOtp:
-                Toast.makeText(this, phoneNoEditText.getText().toString().trim(), Toast.LENGTH_SHORT).show();
-                String phoneNumber = "+88" + phoneNoEditText.getText().toString().trim();
-                sendVerificationCodeToUser(phoneNumber);
-                break;
             case R.id.verifyOtpButton:
-                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
                 code = verifyOtpEt.getText().toString().trim();
                 verifyCode(code);
                 break;
@@ -117,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         PhoneAuthOptions options = PhoneAuthOptions.newBuilder(mAuth)
                 .setPhoneNumber(phoneNumber)       // Phone number to verify
                 .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                .setActivity(MainActivity.this)                 // Activity (for callback binding)
+                .setActivity(VerifyOtpActivity.this)                 // Activity (for callback binding)
                 .setCallbacks(mCallback)          // OnVerificationStateChangedCallbacks
                 .build();
 

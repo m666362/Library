@@ -4,32 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.MainActivity">
+    tools:context=".Activity.VerifyOtpActivity">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/sendOtp"
+        android:layout_above="@+id/sendOtpButton"
         android:id="@+id/phoneNoET"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/sendOtp"
+        android:id="@+id/sendOtpButton"
         android:text="Send otp"
         android:layout_alignParentBottom="true"/>
-
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/verifyOtpButton"
-        android:id="@+id/otpEt"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/verifyOtpButton"
-        android:text="Verify Otp"/>
 
 </RelativeLayout>
