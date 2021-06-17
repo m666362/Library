@@ -15,24 +15,28 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Md Rayhan"
         android:hint="Name"
         android:id="@+id/nameET"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="mdrayhan@gmail.com"
         android:hint="email"
         android:id="@+id/emailET"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="mdrayhanpassword"
         android:hint="password"
         android:id="@+id/passwordET"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="M"
         android:hint="Gender"
         android:id="@+id/genderET"/>
 

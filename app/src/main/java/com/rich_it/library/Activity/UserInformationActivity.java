@@ -63,6 +63,8 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
                 user = getUserInfo();
                 if(validateFrom(user)){
                     Toast.makeText(this, "Account has been created successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    startActivity(intent);
                 }else{
                     Toast.makeText(this, "Fullfill required doc", Toast.LENGTH_SHORT).show();
                 }

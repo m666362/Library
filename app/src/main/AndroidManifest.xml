@@ -7,6 +7,7 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Library">
+        <activity android:name=".Activity.HomeActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/mapKey" />
+
         <activity android:name=".Activity.PhoneNumberActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.UserInformationActivity" />
-        <activity android:name=".Activity.VerifyOtpActivity"></activity>
+        <activity android:name=".Activity.VerifyOtpActivity" />
     </application>
 
 </manifest>
