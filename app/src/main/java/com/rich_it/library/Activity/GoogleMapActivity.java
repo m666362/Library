@@ -43,8 +43,12 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     FusedLocationProviderClient client;
     Button showPlaceButton;
     Spinner spinner;
+    Location myLocation = null;
     String[] placeTypes = {"atm", "restaurant"};
     String[] places = {"ATM", "Restaurant"};
+    String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
+    String defaultRadius = "5000";
+    // +"?location=" + currentLat + "," + currentLong + "&radius=5000" + "&type=" + placeTypeList[i] + "&sensor=true" + "&key=" + getResources().getString(R.string.google_map_key);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onSuccess(Location location) {
                 Log.d(TAG, "onSuccess: ");
+                myLocation = location;
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
                     public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
@@ -104,9 +109,9 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                         mMap = googleMap;
 
                         // Add a marker in Sydney and move the camera
-                        LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
-                        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
+                        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMap.addMarker(new MarkerOptions().position(currentLatLng).title("My Location"));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
                     }
                 });
             }
@@ -124,6 +129,8 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
 
     private void showNearbyPlace() {
         int selected = spinner.getSelectedItemPosition();
-        Toast.makeText(this, "Showing Nearby places "+selected, Toast.LENGTH_SHORT).show();
+        String url = baseUrl + myLocation.getLatitude() +","+ myLocation.getLongitude() +"&radius=" + defaultRadius + "&types=" + placeTypes[selected]+ "&sensor=true" + "&key=" + getResources().getString(R.string.google_maps_key);
+        Log.d(TAG, "showNearbyPlace: " + url);
+        Toast.makeText(this, "Showing Nearby places "+url, Toast.LENGTH_SHORT).show();
     }
 }
