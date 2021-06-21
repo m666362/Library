@@ -32,7 +32,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.getLocationButton:
-                Intent intent = new Intent(this, MapsActivity.class);
+                Intent intent = new Intent(this, GoogleMapActivity.class);
                 startActivity(intent);
                 break;
         }

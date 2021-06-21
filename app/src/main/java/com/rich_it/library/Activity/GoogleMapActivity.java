@@ -1,15 +1,16 @@
 package com.rich_it.library.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,37 +29,36 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.rich_it.library.R;
-import com.rich_it.library.databinding.ActivityMapsBinding;
 
 import org.jetbrains.annotations.NotNull;
 
-public class MapsActivity extends FragmentActivity {
+public class GoogleMapActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String TAG = MapsActivity.class.getName();
+    String TAG = GoogleMapActivity.class.getName();
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
     SupportMapFragment mapFragment;
     FusedLocationProviderClient client;
+    Button showPlaceButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_google_map);
+
         initObject(this);
         requiredTask(this);
     }
 
-    private void initObject(Context context) {
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    private void initObject(GoogleMapActivity context) {
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         client = LocationServices.getFusedLocationProviderClient(context);
+        showPlaceButton = findViewById(R.id.showPlaceButton);
+        String[] placeTypes = {"atm", "restaurant"};
+        String[] places = {"ATM", "Restaurant"};
     }
 
-    private void requiredTask(Context context) {
-
-        // Dexter permission check
+    private void requiredTask(GoogleMapActivity context) {
         Dexter.withContext(context)
                 .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                 .withListener(new PermissionListener() {
@@ -79,6 +79,7 @@ public class MapsActivity extends FragmentActivity {
                         Log.d(TAG, "onPermissionRationaleShouldBeShown: ");
                     }
                 }).check();
+        showPlaceButton.setOnClickListener((View.OnClickListener) context);
     }
 
     private void getMyLocation() {
@@ -106,4 +107,16 @@ public class MapsActivity extends FragmentActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.showPlaceButton:
+                showNearbyPlace();
+                break;
+        }
+    }
+
+    private void showNearbyPlace() {
+
+    }
 }
