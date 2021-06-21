@@ -9,15 +9,29 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_above="@id/showPlaceButton"
+        android:layout_above="@id/linearSpinnerButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/linearSpinnerButton"
         android:layout_alignParentBottom="true"
-        android:text="Show Places"
-        android:id="@+id/showPlaceButton"/>
+        android:orientation="horizontal">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/spinner"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Places"
+            android:id="@+id/showPlaceButton"/>
+
+    </LinearLayout>
 
 </RelativeLayout >

@@ -10,7 +10,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,6 +42,9 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     SupportMapFragment mapFragment;
     FusedLocationProviderClient client;
     Button showPlaceButton;
+    Spinner spinner;
+    String[] placeTypes = {"atm", "restaurant"};
+    String[] places = {"ATM", "Restaurant"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +60,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                 .findFragmentById(R.id.map);
         client = LocationServices.getFusedLocationProviderClient(context);
         showPlaceButton = findViewById(R.id.showPlaceButton);
-        String[] placeTypes = {"atm", "restaurant"};
-        String[] places = {"ATM", "Restaurant"};
+        spinner = findViewById(R.id.spinner);
     }
 
     private void requiredTask(GoogleMapActivity context) {
@@ -80,6 +85,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                     }
                 }).check();
         showPlaceButton.setOnClickListener((View.OnClickListener) context);
+        spinner.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, places ));
     }
 
     private void getMyLocation() {
@@ -117,6 +123,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showNearbyPlace() {
-
+        int selected = spinner.getSelectedItemPosition();
+        Toast.makeText(this, "Showing Nearby places "+selected, Toast.LENGTH_SHORT).show();
     }
 }
