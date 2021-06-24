@@ -25,12 +25,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.clustering.ClusterManager;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.rich_it.library.Model.MyItem;
 import com.rich_it.library.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,6 +50,10 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     String[] places = {"ATM", "Restaurant"};
     String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
     String defaultRadius = "5000";
+
+    // clustering
+    private ClusterManager<MyItem> clusterManager;
+
     // +"?location=" + currentLat + "," + currentLong + "&radius=5000" + "&type=" + placeTypeList[i] + "&sensor=true" + "&key=" + getResources().getString(R.string.google_map_key);
 
     @Override
@@ -134,5 +140,40 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
         String url = baseUrl + myLocation.getLatitude() +","+ myLocation.getLongitude() +"&radius=" + defaultRadius + "&types=" + placeTypes[selected]+ "&sensor=true" + "&key=" + getResources().getString(R.string.google_maps_key);
         Log.d(TAG, "showNearbyPlace: " + url);
         Toast.makeText(this, "Showing Nearby places "+url, Toast.LENGTH_SHORT).show();
+        setUpClusterer();
     }
+
+    private void setUpClusterer() {
+        // Position the map.
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
+
+        // Initialize the manager with the context and the map.
+        // (Activity extends context, so we can pass 'this' in the constructor.)
+        clusterManager = new ClusterManager<MyItem>(GoogleMapActivity.this, mMap);
+
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        mMap.setOnCameraIdleListener(clusterManager);
+        mMap.setOnMarkerClickListener(clusterManager);
+
+        // Add cluster items (markers) to the cluster manager.
+        addItems();
+    }
+
+    private void addItems() {
+
+        // Set some lat/lng coordinates to start with.
+        double lat = 22.3722014;
+        double lng = 91.8465991;
+
+        // Add ten cluster items in close proximity, for purposes of this example.
+        for (int i = 0; i < 10; i++) {
+            double offset = i / 60d;
+            lat = lat + offset;
+            lng = lng + offset;
+            MyItem offsetItem = new MyItem(lat, lng, "Title " + i, "Snippet " + i);
+            clusterManager.addItem(offsetItem);
+        }
+    }
+
 }
