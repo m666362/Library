@@ -140,12 +140,12 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
         String url = baseUrl + myLocation.getLatitude() +","+ myLocation.getLongitude() +"&radius=" + defaultRadius + "&types=" + placeTypes[selected]+ "&sensor=true" + "&key=" + getResources().getString(R.string.google_maps_key);
         Log.d(TAG, "showNearbyPlace: " + url);
         Toast.makeText(this, "Showing Nearby places "+url, Toast.LENGTH_SHORT).show();
-        setUpClusterer();
+        setUpClusterer(myLocation);
     }
 
-    private void setUpClusterer() {
+    private void setUpClusterer(Location location) {
         // Position the map.
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 10));
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
@@ -163,8 +163,8 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     private void addItems() {
 
         // Set some lat/lng coordinates to start with.
-        double lat = 22.3722014;
-        double lng = 91.8465991;
+        double lat = myLocation.getLatitude();
+        double lng = myLocation.getLongitude();
 
         // Add ten cluster items in close proximity, for purposes of this example.
         for (int i = 0; i < 10; i++) {
