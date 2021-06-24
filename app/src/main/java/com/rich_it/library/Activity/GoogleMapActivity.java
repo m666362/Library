@@ -43,7 +43,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     FusedLocationProviderClient client;
     Button showPlaceButton;
     Spinner spinner;
-    Location myLocation = null;
+    Location myLocation;
     String[] placeTypes = {"atm", "restaurant"};
     String[] places = {"ATM", "Restaurant"};
     String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
@@ -100,7 +100,9 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
         tasks.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                Log.d(TAG, "onSuccess: ");
+                if(location == null){
+                    return;
+                }
                 myLocation = location;
                 mapFragment.getMapAsync(new OnMapReadyCallback() {
                     @Override
@@ -109,7 +111,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                         mMap = googleMap;
 
                         // Add a marker in Sydney and move the camera
-                        LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        LatLng currentLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                         mMap.addMarker(new MarkerOptions().position(currentLatLng).title("My Location"));
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
                     }
