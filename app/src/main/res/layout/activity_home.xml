@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,15 +7,61 @@
     android:orientation="vertical"
     tools:context=".Activity.HomeActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_baseline_person_24"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/user_profile_icon"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_person_24"
+        android:layout_toLeftOf="@+id/user_profile_icon"
+        android:layout_marginTop="30dp"
+        android:id="@+id/notification_icon"/>
+
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hello_textview"
+        android:text="Hello"
+        android:textSize="36sp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reader_textview"
+        android:text="Reader"
+        android:textSize="36sp"
+        android:layout_toRightOf="@+id/hello_textview"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"/>
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="home activity"/>
+        android:id="@+id/search_edittext"
+        android:layout_below="@id/hello_textview"
+        android:padding="12dp"
+        android:hint="Search"
+        android:elevation="2dp"
+        android:textSize="24sp"
+        android:paddingLeft="20dp"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:text="Get Location"
         android:id="@+id/getLocationButton"/>
 
-</LinearLayout>
+</RelativeLayout>
