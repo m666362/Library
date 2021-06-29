@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="120dp"
+    android:background="@color/teal_200"
     android:orientation="vertical"
+    android:layout_margin="5dp"
     android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:id="@+id/nearby_book_cover_iv"
         android:src="@mipmap/ic_launcher"/>
 
@@ -14,12 +17,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nearby_book_name"
+        android:layout_margin="20dp"
         android:text="@string/book_name"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nearby_book_author_name"
+        android:layout_margin="20dp"
         android:text="@string/book_author"/>
 
 </LinearLayout>

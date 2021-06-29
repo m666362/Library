@@ -10,12 +10,12 @@ public class Book implements Parcelable {
     private String name;
     private String author;
     private String publication;
-    private int pageNumber;
-    private float rating;
+    private String pageNumber;
+    private String rating;
     private int imageId;
     private List<Review> ratings = new ArrayList<>();
 
-    public Book(String name, String author, String publication, int pageNumber, float rating, int imageId) {
+    public Book(String name, String author, String publication, String pageNumber, String rating, int imageId) {
         this.name = name;
         this.author = author;
         this.publication = publication;
@@ -24,7 +24,7 @@ public class Book implements Parcelable {
         this.imageId = imageId;
     }
 
-    public Book(String name, String author, String publication, int pageNumber, float rating, int imageId, List<Review> ratings) {
+    public Book(String name, String author, String publication, String pageNumber, String rating, int imageId, List<Review> ratings) {
         this.name = name;
         this.author = author;
         this.publication = publication;
@@ -58,19 +58,19 @@ public class Book implements Parcelable {
         this.publication = publication;
     }
 
-    public int getPageNumber() {
+    public String getPageNumber() {
         return pageNumber;
     }
 
-    public void setPageNumber(int pageNumber) {
+    public void setPageNumber(String pageNumber) {
         this.pageNumber = pageNumber;
     }
 
-    public float getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
@@ -94,10 +94,26 @@ public class Book implements Parcelable {
         name = in.readString();
         author = in.readString();
         publication = in.readString();
-        pageNumber = in.readInt();
-        rating = in.readFloat();
+        pageNumber = in.readString();
+        rating = in.readString();
         imageId = in.readInt();
         ratings = in.createTypedArrayList(Review.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(author);
+        dest.writeString(publication);
+        dest.writeString(pageNumber);
+        dest.writeString(rating);
+        dest.writeInt(imageId);
+        dest.writeTypedList(ratings);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -111,20 +127,4 @@ public class Book implements Parcelable {
             return new Book[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(author);
-        dest.writeString(publication);
-        dest.writeInt(pageNumber);
-        dest.writeFloat(rating);
-        dest.writeInt(imageId);
-        dest.writeTypedList(ratings);
-    }
 }

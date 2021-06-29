@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:id="@+id/dynamic_rv"
+                android:id="@+id/suggested_book_rv"
                 android:layout_below="@id/nearby_book_rv"/>
 
         </RelativeLayout>
