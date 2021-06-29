@@ -1,4 +1,4 @@
 package com.rich_it.library.Adapter;
 
-public class BookAdapter {
+public class StaticBookRV {
 }

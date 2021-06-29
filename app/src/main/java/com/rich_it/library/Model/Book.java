@@ -1,31 +1,17 @@
 package com.rich_it.library.Model;
 
-public class Book {
-    String name;
-    String author;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public Book() {
+import java.util.ArrayList;
+import java.util.List;
 
-    }
-
-    public Book(String name, String author) {
-        this.name = name;
-        this.author = author;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+public class Book implements Parcelable {
+    private String name;
+    private String author;
+    private String publication;
+    private int pageNumber;
+    private float rating;
+    private int image;
+    private List<Review> ratings = new ArrayList<Review>();
 }

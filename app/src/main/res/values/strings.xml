@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Library</string>
     <string name="title_activity_maps">Map</string>
+    <string name="book_cover_img">book_cover_img</string>
+    <string name="book_name">book_name</string>
+    <string name="book_author">book_author</string>
 </resources>
