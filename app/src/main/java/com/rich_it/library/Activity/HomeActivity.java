@@ -68,6 +68,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         suggestedBookRV.setLayoutManager(new LinearLayoutManager(this));
         suggestedBookRV.setAdapter(suggestedBookAdapter);
         suggestedBookAdapter.notifyDataSetChanged();
+        suggestedBookRV.setNestedScrollingEnabled(false);
         getLocationButton.setOnClickListener(this);
     }
 
