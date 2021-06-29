@@ -20,14 +20,35 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     Button getLocationButton;
     RecyclerView nearbyBooksRV;
+    RecyclerView dynamicBookRV;
     NearbyBookAdapter nearbyBookAdapter;
     List<Book> books = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        createList();
         initObject();
         requiredTask();
+    }
+
+    private void createList() {
+        books.add(new Book("Islami", "Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_notifications_none_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_menu_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_menu_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_menu_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_menu_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_menu_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_menu_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.ic_baseline_menu_24));
+        books.add(new Book("Islami Aqidah", "D. Abdullah Jahangir", "As Sunnah Trust", 500, (float) 4.5, R.drawable.amu_bubble_mask));
     }
 
     private void initObject() {
@@ -39,6 +60,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void requiredTask() {
         nearbyBooksRV.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         nearbyBooksRV.setAdapter(nearbyBookAdapter);
+        nearbyBookAdapter.notifyDataSetChanged();
         getLocationButton.setOnClickListener(this);
     }
 

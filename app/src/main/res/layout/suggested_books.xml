@@ -7,13 +7,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:id="@+id/book_cover_img"
+        android:id="@+id/nearby_book_cover_iv"
         android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/book_cover_img"
+        android:layout_toRightOf="@+id/nearby_book_cover_iv"
         android:orientation="vertical">
 
         <TextView

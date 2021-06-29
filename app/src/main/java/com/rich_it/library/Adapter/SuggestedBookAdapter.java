@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.R;
-import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.zip.Inflater;
 
-public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.ViewHolder> {
+public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdapter.ViewHolder> {
     Context context;
     List<Book> books;
 
-    public NearbyBookAdapter(Context context, List<Book> books) {
+    public SuggestedBookAdapter(Context context, List<Book> books) {
         this.context = context;
         this.books = books;
     }
@@ -30,16 +30,14 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
     @NonNull
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from( context ).inflate( R.layout.nearby_books, parent, false );
-        return new ViewHolder( view );
+    public SuggestedBookAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.suggested_books, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull NearbyBookAdapter.ViewHolder holder, int position) {
-        holder.nameTv.setText(books.get(position).getName());
-        holder.authorTv.setText(books.get(position).getAuthor());
-        Picasso.get().load(books.get(position).getImageId()).into(holder.coverIv);
+    public void onBindViewHolder(@NonNull @NotNull SuggestedBookAdapter.ViewHolder holder, int position) {
+
     }
 
     @Override
@@ -53,9 +51,6 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
         ImageView coverIv;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            nameTv = itemView.findViewById(R.id.nearby_book_name);
-            authorTv = itemView.findViewById(R.id.nearby_book_author_name);
-            coverIv = itemView.findViewById(R.id.nearby_book_cover_iv);
         }
     }
 }

@@ -13,7 +13,16 @@ public class Book implements Parcelable {
     private int pageNumber;
     private float rating;
     private int imageId;
-    private List<Review> ratings = new ArrayList<Review>();
+    private List<Review> ratings = new ArrayList<>();
+
+    public Book(String name, String author, String publication, int pageNumber, float rating, int imageId) {
+        this.name = name;
+        this.author = author;
+        this.publication = publication;
+        this.pageNumber = pageNumber;
+        this.rating = rating;
+        this.imageId = imageId;
+    }
 
     public Book(String name, String author, String publication, int pageNumber, float rating, int imageId, List<Review> ratings) {
         this.name = name;

@@ -11,7 +11,7 @@ import com.rich_it.library.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static int splashTimeOut = 4000;
+    private static int splashTimeOut = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +20,8 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 new Handler().postDelayed(new Runnable() {
+                    // code to fetch user profile and data from db
+                    // then start HomeActivity
                     @Override
                     public void run() {
                         Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
