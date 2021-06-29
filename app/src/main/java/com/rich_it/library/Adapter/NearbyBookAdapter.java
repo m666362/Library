@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.R;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +37,9 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull NearbyBookAdapter.ViewHolder holder, int position) {
-
+        holder.nameTv.setText(books.get(position).getName());
+        holder.authorTv.setText(books.get(position).getAuthor());
+        Picasso.get().load(books.get(position).getImageId()).into(holder.coverIv);
     }
 
     @Override
@@ -46,11 +50,12 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTv;
         TextView authorTv;
-        int imageId;
+        ImageView coverIv;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             nameTv = itemView.findViewById(R.id.book_name);
             authorTv = itemView.findViewById(R.id.author_name);
+            coverIv = itemView.findViewById(R.id.book_cover_img);
         }
     }
 }
