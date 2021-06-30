@@ -11,12 +11,12 @@
     </string-array>
 
     <array name="id_ActivityScreenIcon">
-        <item>@drawable/ic_baseline_menu_24</item>
-        <item>@drawable/ic_baseline_menu_24</item>
-        <item>@drawable/ic_baseline_person_24</item>
-        <item>@drawable/ic_baseline_menu_24</item>
-        <item>@drawable/ic_baseline_menu_24</item>
-        <item>@drawable/ic_baseline_menu_24</item>
-        <item>@drawable/ic_baseline_menu_24</item>
+        <item>@drawable/ic_baseline_close_24</item>
+        <item>@drawable/ic_baseline_dashboard_24</item>
+        <item>@drawable/ic_baseline_account_circle_24</item>
+        <item>@drawable/ic_baseline_settings_24</item>
+        <item>@drawable/ic_baseline_local_library_24</item>
+        <item>@drawable/ic_baseline_domain_24</item>
+        <item>@drawable/ic_baseline_login_24</item>
     </array>
 </resources>
