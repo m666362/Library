@@ -39,7 +39,7 @@ public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
     public void bindViewHolder(ViewHolder holder) {
         holder.title.setText(title);
         holder.icon.setImageDrawable(icon);
-        holder.title.setText(isChecked? selectedItemTextTint: normalItemTextTint);
+        holder.title.setTextColor(isChecked? selectedItemTextTint: normalItemTextTint);
         holder.icon.setColorFilter(isChecked? selectedItemIconTint: normalItemIconTint);
     }
 
@@ -70,7 +70,7 @@ public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             icon = itemView.findViewById(R.id.icon);
-            title = itemView.findViewById(R.id.title);
+            title = itemView.findViewById(R.id.title_1);
         }
     }
 }

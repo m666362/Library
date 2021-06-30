@@ -7,11 +7,10 @@
         <item>Settings</item>
         <item>Nearby Res</item>
         <item>About Us</item>
-        <item></item>
         <item>Log Out</item>
     </string-array>
 
-    <string-array name="id_ActivityScreenIcon">
+    <array name="id_ActivityScreenIcon">
         <item>@drawable/ic_baseline_menu_24</item>
         <item>@drawable/ic_baseline_menu_24</item>
         <item>@drawable/ic_baseline_person_24</item>
@@ -19,5 +18,5 @@
         <item>@drawable/ic_baseline_menu_24</item>
         <item>@drawable/ic_baseline_menu_24</item>
         <item>@drawable/ic_baseline_menu_24</item>
-    </string-array>
+    </array>
 </resources>
