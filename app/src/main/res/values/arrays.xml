@@ -2,8 +2,8 @@
 <resources>
     <string-array name="id_ActivityScreenTitles">
         <item></item>
-        <item>DashBoard</item>
-        <item>Profile</item>
+        <item >DashBoard</item>
+        <item titles="Dashboard" name="DashsDash">Profile</item>
         <item>Settings</item>
         <item>Nearby Res</item>
         <item>About Us</item>
@@ -14,7 +14,7 @@
     <string-array name="id_ActivityScreenIcon">
         <item>@drawable/ic_baseline_menu_24</item>
         <item>@drawable/ic_baseline_menu_24</item>
-        <item>@drawable/ic_baseline_menu_24</item>
+        <item>@drawable/ic_baseline_person_24</item>
         <item>@drawable/ic_baseline_menu_24</item>
         <item>@drawable/ic_baseline_menu_24</item>
         <item>@drawable/ic_baseline_menu_24</item>

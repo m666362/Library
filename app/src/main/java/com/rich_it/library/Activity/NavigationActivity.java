@@ -50,12 +50,12 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_navigation);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         slidingRootNav = new SlidingRootNavBuilder(this)
-                .withDragDistance(100)
+                .withDragDistance(200)
                 .withRootViewScale(0.75f)
                 .withRootViewElevation(25)
                 .withToolbarMenuToggle(toolbar)
