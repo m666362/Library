@@ -3,20 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
+    android:background="@color/purple_200"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="56dp">
 
     <ImageView
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/icon"
+        android:src="@drawable/ic_baseline_menu_24"
         tools:ignore="ContentDescription"/>
 
     <TextView
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/title"
+        android:text="Hello world"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"/>
 
