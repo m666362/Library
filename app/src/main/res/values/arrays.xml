@@ -2,8 +2,8 @@
 <resources>
     <string-array name="id_ActivityScreenTitles">
         <item></item>
-        <item >DashBoard</item>
-        <item titles="Dashboard" name="DashsDash">Profile</item>
+        <item>DashBoard</item>
+        <item>Profile</item>
         <item>Settings</item>
         <item>Nearby Res</item>
         <item>About Us</item>
