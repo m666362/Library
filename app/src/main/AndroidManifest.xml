@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Library">
+        <activity android:name=".Activity.NavigationActivity"></activity>
         <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,9 +33,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Activity.HomeActivity">
-
-        </activity>
+        <activity android:name=".Activity.HomeActivity"></activity>
         <activity android:name=".Activity.PhoneNumberActivity" />
         <activity android:name=".Activity.UserInformationActivity" />
         <activity android:name=".Activity.VerifyOtpActivity" />
