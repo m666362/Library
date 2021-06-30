@@ -87,10 +87,10 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
 
     private DrawerItem createItemFor(int position){
         return new SimpleItem(screenIcons[position], screenTitles[position])
-                .withNormalItemIconTint(R.color.purple_200)
-                .withNormalItemTextTint(R.color.black)
-                .withSelectedItemIconTint(R.color.purple_200)
-                .withSelectedItemTextTint(R.color.black);
+                .withNormalItemIconTint(color(R.color.black))
+                .withNormalItemTextTint(color(R.color.black))
+                .withSelectedItemIconTint(color(R.color.purple_500))
+                .withSelectedItemTextTint(color(R.color.purple_500));
     }
 
     @ColorInt
