@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.airbnb.lottie.L;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,6 +38,8 @@ import com.rich_it.library.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+
 public class GoogleMapActivity extends AppCompatActivity implements View.OnClickListener {
 
     String TAG = GoogleMapActivity.class.getName();
@@ -46,6 +49,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     Button showPlaceButton;
     Spinner spinner;
     Location myLocation;
+    LatLng myLatLng;
     String[] placeTypes = {"atm", "restaurant"};
     String[] places = {"ATM", "Restaurant"};
     String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
@@ -118,6 +122,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
 
                         // Add a marker in Sydney and move the camera
                         LatLng currentLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                        myLatLng = currentLatLng;
                         mMap.addMarker(new MarkerOptions().position(currentLatLng).title("My Location"));
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
                     }
@@ -171,9 +176,37 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
             double offset = i / 60d;
             lat = lat + offset;
             lng = lng + offset;
+            LatLng finalLatLng = new LatLng(lat, lng);
+            double distance = CalculationByDistance(myLatLng, finalLatLng);
+            Log.d(TAG, "addItems: " + distance);
             MyItem offsetItem = new MyItem(lat, lng, "Title " + i, "Snippet " + i);
             clusterManager.addItem(offsetItem);
         }
+    }
+
+    public double CalculationByDistance(LatLng StartP, LatLng EndP) {
+        int Radius = 6371;// radius of earth in Km
+        double lat1 = StartP.latitude;
+        double lat2 = EndP.latitude;
+        double lon1 = StartP.longitude;
+        double lon2 = EndP.longitude;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLon = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(Math.toRadians(lat1))
+                * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
+                * Math.sin(dLon / 2);
+        double c = 2 * Math.asin(Math.sqrt(a));
+        double valueResult = Radius * c;
+        double km = valueResult / 1;
+        DecimalFormat newFormat = new DecimalFormat("####");
+        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double meter = valueResult % 1000;
+        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec);
+
+        return Radius * c;
     }
 
 }

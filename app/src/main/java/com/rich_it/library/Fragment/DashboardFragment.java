@@ -57,6 +57,8 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
+
+
     public static DashboardFragment newInstance(int someInt, String someTitle) {
         DashboardFragment dashboardFragment = new DashboardFragment();
         Bundle args = new Bundle();
@@ -69,11 +71,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Activity activity = (NavigationActivity) getActivity();
-        ArrayList<Book> books = ((NavigationActivity) activity).getBooks();
-        for (Book book:books){
-            Log.d(TAG, "onStart: " + book.getName()+book.getPublication());
-        }
+
     }
 
     @Override
@@ -85,5 +83,8 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Activity activity = (NavigationActivity) getActivity();
+        ArrayList<Book> books = ((NavigationActivity) activity).getBooks();
+
     }
 }
