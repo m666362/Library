@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:textSize="40sp"
         android:layout_centerInParent="true"
-        android:text="W r u thinking About?"/>
+        android:text="About Us"/>
 
 </RelativeLayout>

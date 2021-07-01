@@ -13,7 +13,7 @@ import com.rich_it.library.R;
 
 import org.jetbrains.annotations.NotNull;
 
-public class NearbyResFragment extends Fragment {
+public class NearbyBookFragment extends Fragment {
 
     @Nullable
     @org.jetbrains.annotations.Nullable

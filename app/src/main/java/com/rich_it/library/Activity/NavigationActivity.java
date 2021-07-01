@@ -12,14 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.WindowManager;
 
-import com.google.android.gms.maps.model.Dash;
 import com.rich_it.library.Abstract.DrawerItem;
 import com.rich_it.library.Adapter.DrawerAdapter;
 import com.rich_it.library.Fragment.AboutFragment;
 import com.rich_it.library.Fragment.DashboardFragment;
-import com.rich_it.library.Fragment.NearbyResFragment;
+import com.rich_it.library.Fragment.NearbyBookFragment;
 import com.rich_it.library.Fragment.ProfileFragment;
 import com.rich_it.library.Fragment.SettingFragment;
 import com.rich_it.library.Model.SimpleItem;
@@ -27,9 +25,7 @@ import com.rich_it.library.Model.SpaceItem;
 import com.rich_it.library.R;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
-import com.yarolegovich.slidingrootnav.SlidingRootNavLayout;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class NavigationActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
@@ -37,7 +33,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     private static final int POS_CLOSE = 0;
     private static final int POS_DASHBOARD = 1;
     private static final int POS_MY_PROFILE = 2;
-    private static final int POS_NEARBY_RES = 3;
+    private static final int POS_NEARBY_BOOK = 3;
     private static final int POS_SETTINGS = 4;
     private static final int POS_ABOUT_US = 5;
     private static final int POS_lOGOUT = 6;
@@ -71,7 +67,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
                 createItemFor(POS_CLOSE),
                 createItemFor(POS_DASHBOARD).setCheck(true),
                 createItemFor(POS_MY_PROFILE),
-                createItemFor(POS_NEARBY_RES),
+                createItemFor(POS_NEARBY_BOOK),
                 createItemFor(POS_SETTINGS),
                 createItemFor(POS_ABOUT_US),
                 new SpaceItem(60),
@@ -130,9 +126,9 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
         }else if(position == POS_SETTINGS){
             SettingFragment settingFragment = new SettingFragment();
             transaction.replace(R.id.container, settingFragment);
-        }else if(position == POS_NEARBY_RES){
-            NearbyResFragment nearbyResFragment = new NearbyResFragment();
-            transaction.replace(R.id.container, nearbyResFragment);
+        }else if(position == POS_NEARBY_BOOK){
+            NearbyBookFragment nearbyBookFragment = new NearbyBookFragment();
+            transaction.replace(R.id.container, nearbyBookFragment);
         }else if(position == POS_lOGOUT){
             finish();
         }
