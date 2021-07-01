@@ -21,7 +21,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -118,11 +121,16 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                     public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
                         Log.d(TAG, "onMapReady: ");
                         mMap = googleMap;
+                        BitmapDescriptor defaultMarker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
 
                         // Add a marker in Sydney and move the camera
                         LatLng currentLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                         myLatLng = currentLatLng;
-                        mMap.addMarker(new MarkerOptions().position(currentLatLng).title("My Location"));
+                        mMap.addMarker(new MarkerOptions()
+                                .position(currentLatLng)
+                                .snippet("I am snippet")
+                                .title("My Location"))
+                                .setIcon(defaultMarker);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
                     }
                 });
