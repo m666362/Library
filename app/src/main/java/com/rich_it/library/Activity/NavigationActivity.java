@@ -21,12 +21,14 @@ import com.rich_it.library.Fragment.DashboardFragment;
 import com.rich_it.library.Fragment.NearbyBookFragment;
 import com.rich_it.library.Fragment.ProfileFragment;
 import com.rich_it.library.Fragment.SettingFragment;
+import com.rich_it.library.Model.Book;
 import com.rich_it.library.Model.SimpleItem;
 import com.rich_it.library.Model.SpaceItem;
 import com.rich_it.library.R;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NavigationActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
@@ -44,11 +46,13 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     private SlidingRootNav slidingRootNav;
 
     Toolbar toolbar;
+    ArrayList<Book> books = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_navigation);
+        createList();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         slidingRootNav = new SlidingRootNavBuilder(this)
@@ -80,6 +84,28 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(drawerAdapter);
         drawerAdapter.setSelected(POS_DASHBOARD);
+    }
+
+    private void createList() {
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+    }
+
+    public ArrayList<Book> getBooks() {
+        return books;
     }
 
     private DrawerItem createItemFor(int position){

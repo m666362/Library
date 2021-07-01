@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.rich_it.library.Activity.NavigationActivity;
 import com.rich_it.library.Adapter.DrawerAdapter;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.ThingsAdapter;
@@ -63,6 +64,16 @@ public class DashboardFragment extends Fragment {
         args.putString("someTitle", someTitle);
         dashboardFragment.setArguments(args);
         return dashboardFragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Activity activity = (NavigationActivity) getActivity();
+        ArrayList<Book> books = ((NavigationActivity) activity).getBooks();
+        for (Book book:books){
+            Log.d(TAG, "onStart: " + book.getName()+book.getPublication());
+        }
     }
 
     @Override
