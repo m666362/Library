@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.airbnb.lottie.L;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,7 +32,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
-import com.rich_it.library.Model.MyItem;
+import com.rich_it.library.Model.BookPosition;
 import com.rich_it.library.R;
 
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +55,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     String defaultRadius = "5000";
 
     // clustering
-    private ClusterManager<MyItem> clusterManager;
+    private ClusterManager<BookPosition> clusterManager;
 
     // +"?location=" + currentLat + "," + currentLong + "&radius=5000" + "&type=" + placeTypeList[i] + "&sensor=true" + "&key=" + getResources().getString(R.string.google_map_key);
 
@@ -154,12 +153,13 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
-        clusterManager = new ClusterManager<MyItem>(GoogleMapActivity.this, mMap);
+        clusterManager = new ClusterManager<BookPosition>(GoogleMapActivity.this, mMap);
 
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
         mMap.setOnCameraIdleListener(clusterManager);
         mMap.setOnMarkerClickListener(clusterManager);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng, 14));
 
         // Add cluster items (markers) to the cluster manager.
         addItems();
@@ -168,19 +168,19 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     private void addItems() {
 
         // Set some lat/lng coordinates to start with.
-        double lat = myLocation.getLatitude();
-        double lng = myLocation.getLongitude();
+        double lat = myLocation.getLatitude()- 0.0051f;
+        double lng = myLocation.getLongitude()- 0.0051f;
 
         // Add ten cluster items in close proximity, for purposes of this example.
         for (int i = 0; i < 100; i++) {
-            double offset = i / 100d;
+            double offset = i / 1000d;
             lat = lat + offset;
             lng = lng + offset;
             LatLng finalLatLng = new LatLng(lat, lng);
             double distance = CalculationByDistance(myLatLng, finalLatLng);
             Log.d(TAG, "addItems: " + distance);
             if(distance<=2.00f){
-                MyItem offsetItem = new MyItem(lat, lng, "Title " + i, "Snippet " + i);
+                BookPosition offsetItem = new BookPosition(lat, lng, "Title " + i, "Distance(km): " + CalculationByDistance(myLatLng, finalLatLng));
                 clusterManager.addItem(offsetItem);
             }
         }
