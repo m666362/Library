@@ -172,15 +172,17 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
         double lng = myLocation.getLongitude();
 
         // Add ten cluster items in close proximity, for purposes of this example.
-        for (int i = 0; i < 10; i++) {
-            double offset = i / 60d;
+        for (int i = 0; i < 100; i++) {
+            double offset = i / 100d;
             lat = lat + offset;
             lng = lng + offset;
             LatLng finalLatLng = new LatLng(lat, lng);
             double distance = CalculationByDistance(myLatLng, finalLatLng);
             Log.d(TAG, "addItems: " + distance);
-            MyItem offsetItem = new MyItem(lat, lng, "Title " + i, "Snippet " + i);
-            clusterManager.addItem(offsetItem);
+            if(distance<=2.00f){
+                MyItem offsetItem = new MyItem(lat, lng, "Title " + i, "Snippet " + i);
+                clusterManager.addItem(offsetItem);
+            }
         }
     }
 
