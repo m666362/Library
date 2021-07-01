@@ -13,6 +13,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.model.Dash;
 import com.rich_it.library.Abstract.DrawerItem;
 import com.rich_it.library.Adapter.DrawerAdapter;
 import com.rich_it.library.Fragment.AboutFragment;
@@ -115,7 +116,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     public void onItemSelected(int position) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if(position == POS_DASHBOARD){
-            DashboardFragment dashboardFragment = new DashboardFragment();
+            DashboardFragment dashboardFragment = DashboardFragment.newInstance(7, "hello");
             transaction.replace(R.id.container, dashboardFragment);
         }else if(position == POS_ABOUT_US){
             AboutFragment aboutFragment = new AboutFragment();
