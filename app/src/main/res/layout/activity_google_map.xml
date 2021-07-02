@@ -32,6 +32,12 @@
             android:text="Show Places"
             android:id="@+id/showPlaceButton"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Map Manually"
+            android:id="@+id/setManualMapButton"/>
+
     </LinearLayout>
 
 </RelativeLayout >

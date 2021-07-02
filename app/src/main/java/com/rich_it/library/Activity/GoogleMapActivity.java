@@ -56,6 +56,8 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     String[] places = {"ATM", "Restaurant"};
     String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
     String defaultRadius = "5000";
+    boolean isSetManualLocation = false;
+    Button setMapManualButton;
 
     // clustering
     private ClusterManager<BookPosition> clusterManager;
@@ -77,6 +79,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
         client = LocationServices.getFusedLocationProviderClient(context);
         showPlaceButton = findViewById(R.id.showPlaceButton);
         spinner = findViewById(R.id.spinner);
+        setMapManualButton = findViewById(R.id.setManualMapButton);
     }
 
     private void requiredTask(GoogleMapActivity context) {
@@ -101,6 +104,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                     }
                 }).check();
         showPlaceButton.setOnClickListener((View.OnClickListener) context);
+        setMapManualButton.setOnClickListener((View.OnClickListener) context);
         spinner.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_dropdown_item, places ));
     }
 
@@ -132,8 +136,25 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                                 .title("My Location"))
                                 .setIcon(defaultMarker);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+                        setMapLongClick(mMap);
                     }
                 });
+            }
+        });
+    }
+
+    private void setMapLongClick(final GoogleMap map) {
+        map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                if (isSetManualLocation == true){
+                    mMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .snippet("Lat : " + latLng.latitude + " - lon : " + latLng.longitude)
+                            .title("My New Location"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                    isSetManualLocation = false;
+                }
             }
         });
     }
@@ -143,6 +164,10 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId()){
             case R.id.showPlaceButton:
                 showNearbyPlace();
+                break;
+            case R.id.setManualMapButton:
+                Toast.makeText(this, "Enabled", Toast.LENGTH_SHORT).show();
+                isSetManualLocation = true;
                 break;
         }
     }
