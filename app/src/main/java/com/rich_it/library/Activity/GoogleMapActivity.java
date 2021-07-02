@@ -42,7 +42,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
 
-public class GoogleMapActivity extends AppCompatActivity implements View.OnClickListener {
+public class GoogleMapActivity extends AppCompatActivity implements View.OnClickListener{
 
     String TAG = GoogleMapActivity.class.getName();
     private GoogleMap mMap;
@@ -51,6 +51,9 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     Button showPlaceButton;
     Spinner spinner;
     Location myLocation;
+    BitmapDescriptor defaultMarker;
+    MarkerOptions markerOptions;
+    Marker myLocationMarker;
     LatLng myLatLng;
     String[] placeTypes = {"atm", "restaurant"};
     String[] places = {"ATM", "Restaurant"};
@@ -125,17 +128,21 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                     public void onMapReady(@NonNull @NotNull GoogleMap googleMap) {
                         Log.d(TAG, "onMapReady: ");
                         mMap = googleMap;
-                        BitmapDescriptor defaultMarker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                        defaultMarker = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
 
                         // Add a marker in Sydney and move the camera
                         LatLng currentLatLng = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                         myLatLng = currentLatLng;
-                        mMap.addMarker(new MarkerOptions()
+
+                        markerOptions = new MarkerOptions()
                                 .position(currentLatLng)
+                                .title("My Location")
                                 .snippet("I am snippet")
-                                .title("My Location"))
-                                .setIcon(defaultMarker);
+                                .icon(defaultMarker);
+
+                        myLocationMarker = mMap.addMarker(markerOptions);
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
+
                         setMapLongClick(mMap);
                     }
                 });
@@ -143,15 +150,20 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
+
     private void setMapLongClick(final GoogleMap map) {
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
                 if (isSetManualLocation == true){
-                    mMap.addMarker(new MarkerOptions()
+                    myLatLng = latLng;
+                    markerOptions = new MarkerOptions()
                             .position(latLng)
-                            .snippet("Lat : " + latLng.latitude + " - lon : " + latLng.longitude)
-                            .title("My New Location"));
+                            .title("My Location")
+                            .snippet("I am snippet")
+                            .icon(defaultMarker);
+
+                    myLocationMarker = mMap.addMarker(markerOptions);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                     isSetManualLocation = false;
                 }
@@ -167,6 +179,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.setManualMapButton:
                 Toast.makeText(this, "Enabled", Toast.LENGTH_SHORT).show();
+                myLocationMarker.remove();
                 isSetManualLocation = true;
                 break;
         }
@@ -201,8 +214,8 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
     private void addItems() {
 
         // Set some lat/lng coordinates to start with.
-        double lat = myLocation.getLatitude()- 0.0051f;
-        double lng = myLocation.getLongitude()- 0.0051f;
+        double lat = myLatLng.latitude- 0.0051f;
+        double lng = myLatLng.longitude- 0.0051f;
 
         // Add ten cluster items in close proximity, for purposes of this example.
         for (int i = 0; i < 100; i++) {
