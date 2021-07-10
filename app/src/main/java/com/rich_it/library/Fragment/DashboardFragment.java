@@ -15,12 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.rich_it.library.Activity.NavigationActivity;
 import com.rich_it.library.Adapter.DrawerAdapter;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.ThingsAdapter;
 import com.rich_it.library.Model.Book;
+import com.rich_it.library.Others.OtherServerCaling;
 import com.rich_it.library.R;
 
 import java.util.ArrayList;
@@ -44,9 +48,26 @@ public class DashboardFragment extends Fragment {
         ArrayList<Book> books = new ArrayList<Book>();
         adapter = new NearbyBookAdapter(getActivity(), books);
         int SomeInt = getArguments().getInt("someInt", 0);
+        OtherServerCaling.getCategories(new JSONArrayRequestListener() {
+            @Override
+            public void onResponse(JSONArray response) {
+//                Toast.makeText(NavigationActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, "onResponse: " + response.toString());
+//                Log.d("TAGMe", "onResponse: " + response.toString());
+                Toast.makeText(listener, response.toString(), Toast.LENGTH_LONG).show();
+            }
+
+
+            @Override
+            public void onError(ANError anError) {
+//                Toast.makeText(NavigationActivity.this, anError.toString(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onError: " + anError);
+                Toast.makeText(listener, "an error", Toast.LENGTH_SHORT).show();
+            }
+        });
         String someTitle = getArguments().getString("someTitle", "");
         Log.d(TAG, "onCreate: " + someTitle + SomeInt);
-        Toast.makeText(listener, someTitle + SomeInt, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(listener, someTitle + SomeInt, Toast.LENGTH_SHORT).show();
     }
 
     @Nullable

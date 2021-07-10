@@ -12,7 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.android.gms.maps.model.Dash;
 import com.rich_it.library.Abstract.DrawerItem;
 import com.rich_it.library.Adapter.DrawerAdapter;
@@ -24,9 +29,12 @@ import com.rich_it.library.Fragment.SettingFragment;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.Model.SimpleItem;
 import com.rich_it.library.Model.SpaceItem;
+import com.rich_it.library.Others.OtherServerCaling;
 import com.rich_it.library.R;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +55,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
 
     Toolbar toolbar;
     ArrayList<Book> books = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +114,10 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     }
 
     public ArrayList<Book> getBooks() {
+
         return books;
+        // do anything with response
+        // handle error
     }
 
     private DrawerItem createItemFor(int position){
