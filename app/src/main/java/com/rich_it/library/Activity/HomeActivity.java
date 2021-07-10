@@ -6,19 +6,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.R;
+import com.rich_it.library.ServerCalling.BookServerCalling;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
+    String TAG = HomeActivity.class.getName();
     Button getLocationButton;
     RecyclerView nearbyBooksRV;
     RecyclerView suggestedBookRV;
@@ -35,6 +45,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createList() {
+        BookServerCalling.getBooks(new JSONArrayRequestListener() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+
+                Toast.makeText(HomeActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+                for (int i=0; i<response.length(); i++){
+                    Log.d(TAG, "i" + i);
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                Log.d(TAG, "onError: " + anError);
+            }
+        });
         books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
         books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
         books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
