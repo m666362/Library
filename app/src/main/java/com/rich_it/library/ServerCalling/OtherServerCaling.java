@@ -1,16 +1,9 @@
-package com.rich_it.library.Others;
-
-import android.util.Log;
+package com.rich_it.library.ServerCalling;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
-import com.rich_it.library.Activity.GoogleMapActivity;
-import com.rich_it.library.Model.User;
-
-import org.json.JSONArray;
+import com.rich_it.library.Others.Constant;
 
 public class OtherServerCaling {
 
@@ -26,5 +19,5 @@ public class OtherServerCaling {
 
     }
 
-    
+
 }

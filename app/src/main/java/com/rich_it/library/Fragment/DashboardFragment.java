@@ -20,11 +20,9 @@ import org.json.JSONArray;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.rich_it.library.Activity.NavigationActivity;
-import com.rich_it.library.Adapter.DrawerAdapter;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
-import com.rich_it.library.Adapter.ThingsAdapter;
 import com.rich_it.library.Model.Book;
-import com.rich_it.library.Others.OtherServerCaling;
+import com.rich_it.library.ServerCalling.OtherServerCaling;
 import com.rich_it.library.R;
 
 import java.util.ArrayList;
