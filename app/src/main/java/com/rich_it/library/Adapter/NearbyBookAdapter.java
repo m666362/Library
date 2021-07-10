@@ -39,7 +39,11 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
     public void onBindViewHolder(@NonNull @NotNull NearbyBookAdapter.ViewHolder holder, int position) {
         holder.nameTv.setText(books.get(position).getName());
         holder.authorTv.setText(books.get(position).getAuthor());
-        Picasso.get().load(books.get(position).getImageId()).into(holder.coverIv);
+        Picasso
+                .get()
+                .load("https://itbook.store/img/books/9781484211830.png")
+                .noFade()
+                .into(holder.coverIv);
     }
 
     @Override

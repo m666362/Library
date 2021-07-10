@@ -11,7 +11,7 @@ public class OtherServerCaling {
 
     public static void getCategories (JSONArrayRequestListener listener) {
         AndroidNetworking.get(Constant.baseUrl + Constant.categories)
-                .setTag("test")
+                .setTag(TAG)
                 .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONArray((JSONArrayRequestListener) listener);

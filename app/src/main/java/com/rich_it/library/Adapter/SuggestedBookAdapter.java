@@ -42,7 +42,11 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
         holder.publicationTv.setText(books.get(position).getPublication());
         holder.pageNumberTv.setText(books.get(position).getPageNumber());
         holder.ratingTv.setText(books.get(position).getRating());
-        Picasso.get().load(books.get(position).getImageId()).into(holder.coverIv);
+        Picasso
+                .get()
+                .load("https://itbook.store/img/books/9781484211830.png")
+                .noFade()
+                .into(holder.coverIv);
     }
 
     @Override
