@@ -11,7 +11,7 @@ import com.rich_it.library.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static int splashTimeOut = 100;
+    private static int splashTimeOut = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
                     // then start HomeActivity
                     @Override
                     public void run() {
-                        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                        Intent intent = new Intent(SplashActivity.this, NavigationActivity.class);
                         startActivity(intent);
                         finish();
                     }
