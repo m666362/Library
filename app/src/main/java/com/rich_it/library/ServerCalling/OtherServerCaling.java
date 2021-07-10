@@ -8,10 +8,9 @@ import com.rich_it.library.Others.Constant;
 public class OtherServerCaling {
 
     private static String TAG = OtherServerCaling.class.getName();
-    private static String categories = "/categories";
 
     public static void getCategories (JSONArrayRequestListener listener) {
-        AndroidNetworking.get(Constant.baseUrl + categories)
+        AndroidNetworking.get(Constant.baseUrl + Constant.categories)
                 .setTag("test")
                 .setPriority(Priority.LOW)
                 .build()
