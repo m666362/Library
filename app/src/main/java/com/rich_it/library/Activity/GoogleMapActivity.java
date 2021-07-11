@@ -226,6 +226,7 @@ public class GoogleMapActivity extends AppCompatActivity implements View.OnClick
             double distance = CalculationByDistance(myLatLng, finalLatLng);
             Log.d(TAG, "addItems: " + distance);
             if(distance<=2.00f){
+                Log.d(TAG, "addItems: " + lat + ", " + lng);
                 BookPosition offsetItem = new BookPosition(lat, lng, "Title " + i, "Distance(km): " + CalculationByDistance(myLatLng, finalLatLng));
                 clusterManager.addItem(offsetItem);
             }
