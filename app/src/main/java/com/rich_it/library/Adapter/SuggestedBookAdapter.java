@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rich_it.library.Model.Book;
+import com.rich_it.library.Model.Category;
 import com.rich_it.library.R;
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdapter.ViewHolder> {
     Context context;
-    List<Book> books;
+    List<Book> books = new ArrayList<>();
 
     public SuggestedBookAdapter(Context context) {
         this.context = context;
@@ -31,22 +32,48 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
     @NotNull
     @Override
     public SuggestedBookAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(context).inflate(R.layout.suggested_books, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull SuggestedBookAdapter.ViewHolder holder, int position) {
+        Book book = books.get(position);
+        holder.name.setText(book.getName());
+        holder.author.setText(book.getAuthor().getName());
+        holder.publication.setText(book.getPublication().getName());
+        holder.pageNumber.setText(String.valueOf( book.getRent()));
+        holder.price.setText(String.valueOf( book.getActualPrice()));
+        Picasso.get().load(book.getCoverPage()).into(holder.coverIv);
+    }
 
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return books.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView name;
+        TextView author;
+        TextView publication;
+        TextView pageNumber;
+        TextView price;
+        ImageView coverIv;
+
         public ViewHolder(@NonNull @NotNull View itemView) {
+
             super(itemView);
+            name = itemView.findViewById(R.id.book_name_tv);
+            author = itemView.findViewById(R.id.book_author_tv);
+            publication = itemView.findViewById(R.id.book_publication_tv);
+            pageNumber = itemView.findViewById(R.id.book_page_tv);
+            price = itemView.findViewById(R.id.book_price_tv);
+            coverIv = itemView.findViewById(R.id.book_cover_tv);
         }
     }
 }

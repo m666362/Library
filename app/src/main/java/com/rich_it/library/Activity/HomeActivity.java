@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -48,11 +49,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     RecyclerView suggestedBookRV;
     NearbyBookAdapter nearbyBookAdapter;
     SuggestedBookAdapter suggestedBookAdapter;
-    List<Book> books = new ArrayList<>();
     RecyclerView categorieRV;
     ArrayList<Category> categories = new ArrayList<>();
     ArrayList<Publication> publications = new ArrayList<>();
-    ArrayList<Publication> temp = new ArrayList<>();
+    ArrayList<Book> books = new ArrayList<>();
+    ArrayList<Book> temp = new ArrayList<>();
     CategoryAdapter categoryAdapter;
     PublicatiionAdapter publicatiionAdapter;
     @Override
@@ -63,7 +64,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         categorieRV.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
         categoryAdapter = new CategoryAdapter(HomeActivity.this);
         publicatiionAdapter = new PublicatiionAdapter(HomeActivity.this);
-        categorieRV.setAdapter(publicatiionAdapter);
+        suggestedBookAdapter = new SuggestedBookAdapter(this);
+        categorieRV.setAdapter(suggestedBookAdapter);
+        categorieRV.setNestedScrollingEnabled(false);
 
         getLocationButton = findViewById(R.id.getLocationButton);
         getLocationButton.setOnClickListener(this);
@@ -75,14 +78,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createCategories() {
-
-        OtherServerCaling.getPublications(new StringRequestListener() {
+        BookServerCalling.getBooks(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
-                Publication[] publications1 = new Gson().fromJson(response, Publication[].class);
-                temp = new ArrayList<>( Arrays.asList( publications1 ) );
-                publications.addAll(temp);
-                publicatiionAdapter.setPublications(publications);
+                Book[] books1 = new Gson().fromJson(response, Book[].class);
+                temp = new ArrayList<>( Arrays.asList( books1 ) );
+                books.addAll(temp);
+                suggestedBookAdapter.setBooks(books);
             }
 
             @Override
@@ -90,6 +92,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "onError: " + anError);
             }
         });
+
+//        OtherServerCaling.getPublications(new StringRequestListener() {
+//            @Override
+//            public void onResponse(String response) {
+//                Publication[] publications1 = new Gson().fromJson(response, Publication[].class);
+//                temp = new ArrayList<>( Arrays.asList( publications1 ) );
+//                publications.addAll(temp);
+//                publicatiionAdapter.setPublications(publications);
+//            }
+//
+//            @Override
+//            public void onError(ANError anError) {
+//                Log.d(TAG, "onError: " + anError);
+//            }
+//        });
 
 //        OtherServerCaling.getCategories(new StringRequestListener() {
 //            @Override
