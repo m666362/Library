@@ -8,52 +8,7 @@ import java.util.List;
 
 public class Book implements Parcelable {
 
-    /*
-    coverPage: {
-            type: String,
-        },
-        name: {
-            type: String,
-        },
-        author: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'author',
-            autopopulate: { maxDepth: 1 }
-        },
-        owner: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'user',
-            autopopulate: { maxDepth: 1 }
-        },
-        publication: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'publication',
-            autopopulate: { maxDepth: 1 }
-        },
-        freePages: {
-            type: String,
-        },
-        description: {
-            type: String,
-        },
-        categories: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'category',
-                autopopulate: { maxDepth: 1 }
-            }
-        ],
-        actualPrice: {
-            type: Number,
-        },
-        rent: {
-            type: Number,
-        },
-        duration: {
-            type: Number,
-        }
-
-     */
+    private String _id;
     private String name;
     private String author;
     private String publication;
@@ -61,30 +16,20 @@ public class Book implements Parcelable {
     private String owner;
     private String freePages;
     private String description;
-    private String categories;
+    private ArrayList<Category> categories;
     private int actualPrice;
     private int rent;
     private int duration;
+    private String createdAt;
+    private String updatedAt;
+    private String __v;
 
     public Book(String name) {
         this.name = name;
     }
 
-    protected Book(Parcel in) {
-        name = in.readString();
-        author = in.readString();
-        publication = in.readString();
-        coverPage = in.readString();
-        owner = in.readString();
-        freePages = in.readString();
-        description = in.readString();
-        categories = in.readString();
-        actualPrice = in.readInt();
-        rent = in.readInt();
-        duration = in.readInt();
-    }
-
-    public Book(String name, String author, String publication, String coverPage, String owner, String freePages, String description, String categories, int actualPrice, int rent, int duration) {
+    public Book(String _id, String name, String author, String publication, String coverPage, String owner, String freePages, String description, ArrayList<Category> categories, int actualPrice, int rent, int duration, String createdAt, String updatedAt, String __v) {
+        this._id = _id;
         this.name = name;
         this.author = author;
         this.publication = publication;
@@ -96,6 +41,17 @@ public class Book implements Parcelable {
         this.actualPrice = actualPrice;
         this.rent = rent;
         this.duration = duration;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.__v = __v;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -154,11 +110,11 @@ public class Book implements Parcelable {
         this.description = description;
     }
 
-    public String getCategories() {
+    public ArrayList<Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(String categories) {
+    public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
     }
 
@@ -186,6 +142,72 @@ public class Book implements Parcelable {
         this.duration = duration;
     }
 
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String get__v() {
+        return __v;
+    }
+
+    public void set__v(String __v) {
+        this.__v = __v;
+    }
+
+    protected Book(Parcel in) {
+        _id = in.readString();
+        name = in.readString();
+        author = in.readString();
+        publication = in.readString();
+        coverPage = in.readString();
+        owner = in.readString();
+        freePages = in.readString();
+        description = in.readString();
+        categories = in.createTypedArrayList(Category.CREATOR);
+        actualPrice = in.readInt();
+        rent = in.readInt();
+        duration = in.readInt();
+        createdAt = in.readString();
+        updatedAt = in.readString();
+        __v = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(_id);
+        dest.writeString(name);
+        dest.writeString(author);
+        dest.writeString(publication);
+        dest.writeString(coverPage);
+        dest.writeString(owner);
+        dest.writeString(freePages);
+        dest.writeString(description);
+        dest.writeTypedList(categories);
+        dest.writeInt(actualPrice);
+        dest.writeInt(rent);
+        dest.writeInt(duration);
+        dest.writeString(createdAt);
+        dest.writeString(updatedAt);
+        dest.writeString(__v);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<Book> CREATOR = new Creator<Book>() {
         @Override
         public Book createFromParcel(Parcel in) {
@@ -197,24 +219,4 @@ public class Book implements Parcelable {
             return new Book[size];
         }
     };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(author);
-        dest.writeString(publication);
-        dest.writeString(coverPage);
-        dest.writeString(owner);
-        dest.writeString(freePages);
-        dest.writeString(description);
-        dest.writeString(categories);
-        dest.writeInt(actualPrice);
-        dest.writeInt(rent);
-        dest.writeInt(duration);
-    }
 }

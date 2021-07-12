@@ -14,6 +14,10 @@ public class Publication implements Parcelable {
     private String updatedAt;
     private String __v;
 
+    public Publication(String name) {
+        this.name = name;
+    }
+
     public Publication(String _id, String name, ArrayList<Category> categories, String createdAt, String updatedAt, String __v) {
         this._id = _id;
         this.name = name;

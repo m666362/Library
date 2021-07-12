@@ -11,6 +11,10 @@ public class Category implements Parcelable {
     private String updatedAt;
     private String __v;
 
+    public Category(String name) {
+        this.name = name;
+    }
+
     public Category(String _id, String name, String icon, String createdAt, String updatedAt, String __v) {
         this._id = _id;
         this.name = name;
