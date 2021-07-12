@@ -10,10 +10,10 @@ public class Book implements Parcelable {
 
     private String _id;
     private String name;
-    private String author;
-    private String publication;
+    private Author author;
+    private Publication publication;
     private String coverPage;
-    private String owner;
+    private User owner;
     private String freePages;
     private String description;
     private ArrayList<Category> categories;
@@ -28,7 +28,7 @@ public class Book implements Parcelable {
         this.name = name;
     }
 
-    public Book(String _id, String name, String author, String publication, String coverPage, String owner, String freePages, String description, ArrayList<Category> categories, int actualPrice, int rent, int duration, String createdAt, String updatedAt, String __v) {
+    public Book(String _id, String name, Author author, Publication publication, String coverPage, User owner, String freePages, String description, ArrayList<Category> categories, int actualPrice, int rent, int duration, String createdAt, String updatedAt, String __v) {
         this._id = _id;
         this.name = name;
         this.author = author;
@@ -62,19 +62,19 @@ public class Book implements Parcelable {
         this.name = name;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 
-    public String getPublication() {
+    public Publication getPublication() {
         return publication;
     }
 
-    public void setPublication(String publication) {
+    public void setPublication(Publication publication) {
         this.publication = publication;
     }
 
@@ -86,11 +86,11 @@ public class Book implements Parcelable {
         this.coverPage = coverPage;
     }
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
@@ -169,10 +169,10 @@ public class Book implements Parcelable {
     protected Book(Parcel in) {
         _id = in.readString();
         name = in.readString();
-        author = in.readString();
-        publication = in.readString();
+        author = in.readParcelable(Author.class.getClassLoader());
+        publication = in.readParcelable(Publication.class.getClassLoader());
         coverPage = in.readString();
-        owner = in.readString();
+        owner = in.readParcelable(User.class.getClassLoader());
         freePages = in.readString();
         description = in.readString();
         categories = in.createTypedArrayList(Category.CREATOR);
@@ -188,10 +188,10 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(_id);
         dest.writeString(name);
-        dest.writeString(author);
-        dest.writeString(publication);
+        dest.writeParcelable(author, flags);
+        dest.writeParcelable(publication, flags);
         dest.writeString(coverPage);
-        dest.writeString(owner);
+        dest.writeParcelable(owner, flags);
         dest.writeString(freePages);
         dest.writeString(description);
         dest.writeTypedList(categories);

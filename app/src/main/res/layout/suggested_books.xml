@@ -24,16 +24,18 @@
             android:layout_height="wrap_content"
             android:id="@+id/book_name_tv"
             android:text="@string/book_name"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/book_author_tv"
-            android:text="@string/book_name"/>
+            android:text="@string/book_author"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/book_publication_tv"
-            android:text="@string/book_name"/>
+            android:text="@string/book_publication"/>
 
     </LinearLayout>
 
@@ -48,6 +50,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/book_page_tv"
             android:text="@string/book_name"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

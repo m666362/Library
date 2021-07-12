@@ -107,96 +107,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 //        });
     }
 
-    private void createList() {
-        BookServerCalling.getBooks(new StringRequestListener() {
-            @Override
-            public void onResponse(String response) {
-                Book[] booksArray = new Gson().fromJson( response, Book[].class );
-                books = new ArrayList<>( Arrays.asList( booksArray ) );
-
-                nearbyBookAdapter.setBooks((ArrayList<Book>) books);
-                suggestedBookAdapter.setBooks((ArrayList<Book>) books);
-
-                new AlertDialog.Builder(HomeActivity.this)
-                        .setTitle("Sandwich Dialog")
-                        .setMessage(books.toString())
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(HomeActivity.this, "Declined", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(HomeActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setCancelable(true)
-                        .show();
-            }
-
-            @Override
-            public void onError(ANError anError) {
-                Log.d(TAG, "onError: " + anError.toString());
-            }
-        });
-//        BookServerCalling.getBooks(new JSONArrayRequestListener() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//
-//                new AlertDialog.Builder(HomeActivity.this)
-//                        .setTitle("Sandwich Dialog")
-//                        .setMessage(response.toString())
-//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Toast.makeText(HomeActivity.this, "Declined", Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Toast.makeText(HomeActivity.this, "Accepted", Toast.LENGTH_SHORT).show();
-//                            }
-//                        })
-//                        .setCancelable(true)
-//                        .show();
-//
-//                Toast.makeText(HomeActivity.this, response.toString(), Toast.LENGTH_LONG).show();
-//                for (int i=0; i<response.length(); i++){
-//                    Log.d(TAG, "i" + i);
-//                }
-//            }
-//
-//            @Override
-//            public void onError(ANError anError) {
-//                Log.d(TAG, "onError: " + anError);
-//            }
-//        });
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-    }
 
     private void initObject() {
         getLocationButton = findViewById(R.id.getLocationButton);
         nearbyBooksRV = findViewById(R.id.nearby_book_rv);
         nearbyBookAdapter = new NearbyBookAdapter(this, books);
         suggestedBookRV = findViewById(R.id.suggested_book_rv);
-        suggestedBookAdapter = new SuggestedBookAdapter(this, books);
+        suggestedBookAdapter = new SuggestedBookAdapter(this);
 
     }
 
