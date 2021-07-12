@@ -28,6 +28,13 @@ public class OtherServerCaling {
                 .getAsString(listener);
     }
 
+    public static void getPublications (StringRequestListener listener) {
+        AndroidNetworking.get(Constant.baseUrl + Constant.publications)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsString(listener);
+    }
+
     public static void getCategory (StringRequestListener listener) {
         AndroidNetworking.get(Constant.baseUrl + Constant.categories + Constant.byid + "/60ea8d4817ae30002266b960")
                 .setPriority(Priority.LOW)

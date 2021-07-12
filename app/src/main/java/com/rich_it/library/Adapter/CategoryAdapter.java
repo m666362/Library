@@ -50,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return categories.size();
     }
 
-    public void setCategory(ArrayList<Category> categories) {
+    public void setCategories(ArrayList<Category> categories) {
         this.categories = categories;
         notifyDataSetChanged();
     }

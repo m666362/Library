@@ -20,9 +20,11 @@ import com.google.android.gms.common.internal.Objects;
 import com.google.gson.Gson;
 import com.rich_it.library.Adapter.CategoryAdapter;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
+import com.rich_it.library.Adapter.PublicatiionAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.Model.Category;
+import com.rich_it.library.Model.Publication;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.BookServerCalling;
 import com.rich_it.library.ServerCalling.OtherServerCaling;
@@ -49,12 +51,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     List<Book> books = new ArrayList<>();
     RecyclerView categorieRV;
     ArrayList<Category> categories = new ArrayList<>();
+    ArrayList<Publication> publications = new ArrayList<>();
+    ArrayList<Publication> temp = new ArrayList<>();
     CategoryAdapter categoryAdapter;
+    PublicatiionAdapter publicatiionAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         categorieRV = findViewById(R.id.category_rv);
+        categorieRV.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
+        categoryAdapter = new CategoryAdapter(HomeActivity.this);
+        publicatiionAdapter = new PublicatiionAdapter(HomeActivity.this);
+        categorieRV.setAdapter(publicatiionAdapter);
+
+        getLocationButton = findViewById(R.id.getLocationButton);
+        getLocationButton.setOnClickListener(this);
         createCategories();
 
 //        createList();
@@ -63,16 +75,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createCategories() {
-        categorieRV = findViewById(R.id.category_rv);
-        categorieRV.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
-        categoryAdapter = new CategoryAdapter(HomeActivity.this);
-        categorieRV.setAdapter(categoryAdapter);
-        OtherServerCaling.getCategories(new StringRequestListener() {
+
+        OtherServerCaling.getPublications(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
-                Category[] categories1 = new Gson().fromJson(response, Category[].class);
-                categories = new ArrayList<>( Arrays.asList( categories1 ) );
-                categoryAdapter.setCategory( categories );
+                Publication[] publications1 = new Gson().fromJson(response, Publication[].class);
+                temp = new ArrayList<>( Arrays.asList( publications1 ) );
+                publications.addAll(temp);
+                publicatiionAdapter.setPublications(publications);
             }
 
             @Override
@@ -80,6 +90,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d(TAG, "onError: " + anError);
             }
         });
+
+//        OtherServerCaling.getCategories(new StringRequestListener() {
+//            @Override
+//            public void onResponse(String response) {
+//                Category[] categories1 = new Gson().fromJson(response, Category[].class);
+//                temp = new ArrayList<>( Arrays.asList( categories1 ) );
+//                categories.addAll(temp);
+//                categoryAdapter.setCategories( categories );
+//            }
+//
+//            @Override
+//            public void onError(ANError anError) {
+//                Log.d(TAG, "onError: " + anError);
+//            }
+//        });
     }
 
     private void createList() {
@@ -188,8 +213,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.getLocationButton:
-                Intent intent = new Intent(this, GoogleMapActivity.class);
-                startActivity(intent);
+                Toast.makeText(HomeActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(this, GoogleMapActivity.class);
+//                startActivity(intent);
+                createCategories();
                 break;
         }
     }
