@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdapter.ViewHolder> {
@@ -40,13 +41,18 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
         holder.nameTv.setText(books.get(position).getName());
         holder.authorTv.setText(books.get(position).getAuthor());
         holder.publicationTv.setText(books.get(position).getPublication());
-        holder.pageNumberTv.setText(books.get(position).getPageNumber());
-        holder.ratingTv.setText(books.get(position).getRating());
+//        holder.pageNumberTv.setText(books.get(position).getPageNumber());
+//        holder.ratingTv.setText(books.get(position).getRating());
         Picasso
                 .get()
                 .load("https://itbook.store/img/books/9781484211830.png")
                 .noFade()
                 .into(holder.coverIv);
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+        notifyDataSetChanged();
     }
 
     @Override

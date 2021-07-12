@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.ViewHolder> {
@@ -44,6 +45,11 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
                 .load("https://itbook.store/img/books/9781484211830.png")
                 .noFade()
                 .into(holder.coverIv);
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+        notifyDataSetChanged();
     }
 
     @Override

@@ -46,23 +46,23 @@ public class DashboardFragment extends Fragment {
         ArrayList<Book> books = new ArrayList<Book>();
         adapter = new NearbyBookAdapter(getActivity(), books);
         int SomeInt = getArguments().getInt("someInt", 0);
-        OtherServerCaling.getCategories(new JSONArrayRequestListener() {
-            @Override
-            public void onResponse(JSONArray response) {
-//                Toast.makeText(NavigationActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-//                Log.d(TAG, "onResponse: " + response.toString());
-//                Log.d("TAGMe", "onResponse: " + response.toString());
-                Toast.makeText(listener, response.toString(), Toast.LENGTH_LONG).show();
-            }
-
-
-            @Override
-            public void onError(ANError anError) {
-//                Toast.makeText(NavigationActivity.this, anError.toString(), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onError: " + anError);
-                Toast.makeText(listener, "an error", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        OtherServerCaling.getCategories(new JSONArrayRequestListener() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+////                Toast.makeText(NavigationActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
+////                Log.d(TAG, "onResponse: " + response.toString());
+////                Log.d("TAGMe", "onResponse: " + response.toString());
+//                Toast.makeText(listener, response.toString(), Toast.LENGTH_LONG).show();
+//            }
+//
+//
+//            @Override
+//            public void onError(ANError anError) {
+////                Toast.makeText(NavigationActivity.this, anError.toString(), Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, "onError: " + anError);
+//                Toast.makeText(listener, "an error", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         String someTitle = getArguments().getString("someTitle", "");
         Log.d(TAG, "onCreate: " + someTitle + SomeInt);
 //        Toast.makeText(listener, someTitle + SomeInt, Toast.LENGTH_SHORT).show();

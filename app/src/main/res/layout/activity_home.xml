@@ -81,8 +81,15 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/nearby_book_rv"
+                android:padding="50dp"
+                android:id="@+id/category_rv"
                 android:layout_below="@id/search_edittext"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nearby_book_rv"
+                android:layout_below="@id/category_rv"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
