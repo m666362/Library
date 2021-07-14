@@ -52,18 +52,13 @@
                 android:textSize="24sp"
                 android:paddingLeft="20dp"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/nearby_book_rv"
-                android:layout_below="@id/search_edittext"/>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@id/search_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:id="@+id/suggested_book_rv"
-                android:layout_below="@id/nearby_book_rv"/>
+                android:id="@+id/suggested_book_rv_f"/>
 
         </RelativeLayout>
 

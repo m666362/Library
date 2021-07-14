@@ -30,6 +30,7 @@ import com.rich_it.library.Model.SimpleItem;
 import com.rich_it.library.Model.SpaceItem;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.BookServerCalling;
+import com.rich_it.library.ViewModel.BookViewModel;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -55,11 +56,14 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     ArrayList<Book> books = new ArrayList<>();
     ArrayList<Book> tempBooks = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_navigation);
+
+
         createList();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -113,26 +117,26 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     }
 
     public ArrayList<Book> getBooks() {
-//        BookServerCalling.getBooks(new StringRequestListener() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    Book[] books1 = new Gson().fromJson(response, Book[].class);
-//                    tempBooks = new ArrayList<>( Arrays.asList( books1 ) );
-//                    books.addAll(tempBooks);
-////                    /return books;
-////                    suggestedBookAdapter.setBooks(books);
-//                }catch (Exception e){
-//                    Toast.makeText(NavigationActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(ANError anError) {
-//                Toast.makeText(NavigationActivity.this, anError.toString(), Toast.LENGTH_SHORT).show();
-//                Log.d(TAG, "onError: " + anError);
-//            }
-//        });
+        BookServerCalling.getBooks(new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Book[] books1 = new Gson().fromJson(response, Book[].class);
+                    tempBooks = new ArrayList<>( Arrays.asList( books1 ) );
+                    books.addAll(tempBooks);
+//                    return books;
+//                    suggestedBookAdapter.setBooks(books);
+                }catch (Exception e){
+                    Toast.makeText(NavigationActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                Toast.makeText(NavigationActivity.this, anError.toString(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onError: " + anError);
+            }
+        });
         return books;
         // do anything with response
         // handle error

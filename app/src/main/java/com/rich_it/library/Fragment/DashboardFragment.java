@@ -1,6 +1,7 @@
 package com.rich_it.library.Fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelStore;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -23,17 +32,25 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.rich_it.library.Activity.NavigationActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
+import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.ServerCalling.OtherServerCaling;
 import com.rich_it.library.R;
+import com.rich_it.library.ViewModel.BookViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class DashboardFragment extends Fragment {
     private static final String TAG = DashboardFragment.class.getName();
     NearbyBookAdapter adapter;
+    SuggestedBookAdapter suggestedBookAdapter;
+    RecyclerView recyclerView;
     FragmentActivity listener;
     ProgressBar pb;
+    private BookViewModel viewModel;
+    ArrayList<Book> myBooks = new ArrayList<>() ;
 
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
@@ -46,29 +63,9 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<Book> books = new ArrayList<Book>();
-        adapter = new NearbyBookAdapter(getActivity(), books);
         int SomeInt = getArguments().getInt("someInt", 0);
-//        OtherServerCaling.getCategories(new JSONArrayRequestListener() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-////                Toast.makeText(NavigationActivity.this, response.toString(), Toast.LENGTH_SHORT).show();
-////                Log.d(TAG, "onResponse: " + response.toString());
-////                Log.d("TAGMe", "onResponse: " + response.toString());
-//                Toast.makeText(listener, response.toString(), Toast.LENGTH_LONG).show();
-//            }
-//
-//
-//            @Override
-//            public void onError(ANError anError) {
-////                Toast.makeText(NavigationActivity.this, anError.toString(), Toast.LENGTH_SHORT).show();
-//                Log.d(TAG, "onError: " + anError);
-//                Toast.makeText(listener, "an error", Toast.LENGTH_SHORT).show();
-//            }
-//        });
         String someTitle = getArguments().getString("someTitle", "");
         Log.d(TAG, "onCreate: " + someTitle + SomeInt);
-//        Toast.makeText(listener, someTitle + SomeInt, Toast.LENGTH_SHORT).show();
     }
 
     @Nullable
@@ -76,12 +73,28 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.dashboard_fragment, container, false);
-        pb = root.findViewById(R.id.dashpbLoading);
-        pb.setVisibility(ProgressBar.VISIBLE);
         return root;
     }
 
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        pb = view.findViewById(R.id.dashpbLoading);
+        pb.setVisibility(ProgressBar.VISIBLE);
+        recyclerView = view.findViewById(R.id.suggested_book_rv_f);
+        suggestedBookAdapter = new SuggestedBookAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() ));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(suggestedBookAdapter);
+        viewModel = ViewModelProviders.of(listener).get(BookViewModel.class);
+        viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
+            // update UI
+            myBooks.addAll(books);
+            suggestedBookAdapter.setBooks( myBooks);
+            pb.setVisibility(ProgressBar.GONE);
+        });
 
+    }
 
     public static DashboardFragment newInstance(int someInt, String someTitle) {
         DashboardFragment dashboardFragment = new DashboardFragment();
@@ -104,6 +117,8 @@ public class DashboardFragment extends Fragment {
         this.listener = null;
     }
 
+
+
     @Override
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -113,7 +128,6 @@ public class DashboardFragment extends Fragment {
             @Override
             public void run() {
 
-                pb.setVisibility(ProgressBar.INVISIBLE);
             }
         },3000);
     }
