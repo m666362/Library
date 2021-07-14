@@ -12,7 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 import com.rich_it.library.Abstract.DrawerItem;
 import com.rich_it.library.Adapter.DrawerAdapter;
 import com.rich_it.library.Fragment.AboutFragment;
@@ -24,6 +29,7 @@ import com.rich_it.library.Model.Book;
 import com.rich_it.library.Model.SimpleItem;
 import com.rich_it.library.Model.SpaceItem;
 import com.rich_it.library.R;
+import com.rich_it.library.ServerCalling.BookServerCalling;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -39,6 +45,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     private static final int POS_SETTINGS = 4;
     private static final int POS_ABOUT_US = 5;
     private static final int POS_lOGOUT = 6;
+    private static final String TAG = NavigationActivity.class.getName();
 
     private String[] screenTitles;
     private Drawable[] screenIcons;
@@ -46,6 +53,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
 
     Toolbar toolbar;
     ArrayList<Book> books = new ArrayList<>();
+    ArrayList<Book> tempBooks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +113,26 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     }
 
     public ArrayList<Book> getBooks() {
-
+//        BookServerCalling.getBooks(new StringRequestListener() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    Book[] books1 = new Gson().fromJson(response, Book[].class);
+//                    tempBooks = new ArrayList<>( Arrays.asList( books1 ) );
+//                    books.addAll(tempBooks);
+////                    /return books;
+////                    suggestedBookAdapter.setBooks(books);
+//                }catch (Exception e){
+//                    Toast.makeText(NavigationActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(ANError anError) {
+//                Toast.makeText(NavigationActivity.this, anError.toString(), Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, "onError: " + anError);
+//            }
+//        });
         return books;
         // do anything with response
         // handle error

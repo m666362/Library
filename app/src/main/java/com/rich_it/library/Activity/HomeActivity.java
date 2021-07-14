@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidnetworking.error.ANError;
@@ -56,10 +57,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<Book> temp = new ArrayList<>();
     CategoryAdapter categoryAdapter;
     PublicatiionAdapter publicatiionAdapter;
+    ProgressBar pb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // on some click or some loading we need to wait for...
+        pb = (ProgressBar) findViewById(R.id.pbLoading);
+        pb.setVisibility(ProgressBar.VISIBLE);
+// run a background job and once complete
         categorieRV = findViewById(R.id.category_rv);
         categorieRV.setLayoutManager(new LinearLayoutManager(HomeActivity.this));
         categoryAdapter = new CategoryAdapter(HomeActivity.this);
@@ -81,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         BookServerCalling.getBooks(new StringRequestListener() {
             @Override
             public void onResponse(String response) {
+                pb.setVisibility(ProgressBar.INVISIBLE);
                 Book[] books1 = new Gson().fromJson(response, Book[].class);
                 temp = new ArrayList<>( Arrays.asList( books1 ) );
                 books.addAll(temp);
@@ -147,6 +154,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.getLocationButton:
+                pb.setVisibility(ProgressBar.VISIBLE);
                 Toast.makeText(HomeActivity.this, "Pressed", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(this, GoogleMapActivity.class);
 //                startActivity(intent);

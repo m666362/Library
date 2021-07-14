@@ -3,10 +3,12 @@ package com.rich_it.library.Fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ public class DashboardFragment extends Fragment {
     private static final String TAG = DashboardFragment.class.getName();
     NearbyBookAdapter adapter;
     FragmentActivity listener;
+    ProgressBar pb;
 
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
@@ -73,6 +76,8 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.dashboard_fragment, container, false);
+        pb = root.findViewById(R.id.dashpbLoading);
+        pb.setVisibility(ProgressBar.VISIBLE);
         return root;
     }
 
@@ -104,6 +109,12 @@ public class DashboardFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Activity activity = (NavigationActivity) getActivity();
         ArrayList<Book> books = ((NavigationActivity) activity).getBooks();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
 
+                pb.setVisibility(ProgressBar.INVISIBLE);
+            }
+        },3000);
     }
 }
