@@ -46,11 +46,13 @@ public class DashboardFragment extends Fragment {
     private static final String TAG = DashboardFragment.class.getName();
     NearbyBookAdapter adapter;
     SuggestedBookAdapter suggestedBookAdapter;
+    LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
     FragmentActivity listener;
     ProgressBar pb;
     private BookViewModel viewModel;
     ArrayList<Book> myBooks = new ArrayList<>() ;
+    boolean isLoading = false;
 
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
@@ -83,7 +85,8 @@ public class DashboardFragment extends Fragment {
         pb.setVisibility(ProgressBar.VISIBLE);
         recyclerView = view.findViewById(R.id.suggested_book_rv_f);
         suggestedBookAdapter = new SuggestedBookAdapter(getActivity());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity() ));
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(suggestedBookAdapter);
         viewModel = ViewModelProviders.of(listener).get(BookViewModel.class);
@@ -94,6 +97,47 @@ public class DashboardFragment extends Fragment {
             pb.setVisibility(ProgressBar.GONE);
         });
 
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int ydy = 0;
+            @Override
+            public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                isLoading = false;
+                Toast.makeText(listener, "changed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int total = linearLayoutManager.getItemCount();
+                int firstVisibleItemCount = linearLayoutManager.findFirstVisibleItemPosition();
+                int FirstCompletelyVisibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                int LastCompletelyVisibleItemPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+                int diff= LastCompletelyVisibleItemPosition - FirstCompletelyVisibleItemPosition;
+                int lastVisibleItemCount = linearLayoutManager.findLastVisibleItemPosition();
+                Toast.makeText(listener, Integer.toString(diff), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "total: " + total + " firstVisibleItemCount: " + firstVisibleItemCount +  " lastVisibleItemCount: " + lastVisibleItemCount + " diff: " + diff);
+
+                //to avoid multiple calls to loadMore() method
+                //maintain a boolean value (isLoading). if loadMore() task started set to true and completes set to false
+                if (!isLoading) {
+                    isLoading = true;
+                    if (total > 0){
+                        if ((total - 1) == lastVisibleItemCount){
+                            pb.setVisibility(View.VISIBLE);
+                            viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
+                                // update UI
+                                myBooks.addAll(books);
+                                suggestedBookAdapter.setBooks( myBooks);
+                                pb.setVisibility(ProgressBar.GONE);
+                            });
+                        }else{
+                            pb.setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public static DashboardFragment newInstance(int someInt, String someTitle) {

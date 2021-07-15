@@ -8,12 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.rich_it.library.R;
 
 public class PhoneNumberActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button sendOtp;
-    EditText phoneNoEt;
+    TextInputLayout numberTextInput ;
+    TextInputEditText numberEditText;
+    MaterialButton sendOtpButton ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +29,13 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initObjects() {
-        sendOtp = findViewById(R.id.sendOtpButton);
-        phoneNoEt = findViewById(R.id.phoneNoET);
+        numberTextInput = findViewById(R.id.number_text_input);
+        numberEditText = findViewById(R.id.number_edit_text);
+        sendOtpButton = findViewById(R.id.sendOtpButton);
     }
 
     private void requiredTask() {
-        sendOtp.setOnClickListener(this::onClick);
+        sendOtpButton.setOnClickListener(this::onClick);
     }
 
     @Override
@@ -37,7 +43,7 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()){
             case R.id.sendOtpButton:
                 // todo: show loading
-                String phoneNumber = "+88" + phoneNoEt.getText().toString().trim();
+                String phoneNumber = numberEditText.getText().toString().trim();
                 Intent intent = new Intent(this, VerifyOtpActivity.class);
                 intent.putExtra("phoneNumber", phoneNumber);
                 startActivity(intent);

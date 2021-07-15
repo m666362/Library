@@ -19,7 +19,7 @@ public class BookViewModel extends ViewModel {
     private static final String TAG = "hello";
     private MutableLiveData<List<Book>> books;
     public LiveData<List<Book>> getBooks() {
-        if (books == null) {
+        if (true) {
             books = new MutableLiveData<List<Book>>();
             loadBooks();
         }

@@ -3,6 +3,7 @@
     package="com.rich_it.library">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
@@ -14,11 +15,7 @@
         android:theme="@style/Theme.Library">
         <activity android:name=".Activity.NavigationActivity"></activity>
         <activity android:name=".Activity.SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Activity.GoogleMapActivity" />
         <!--
@@ -34,7 +31,13 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Activity.HomeActivity"></activity>
-        <activity android:name=".Activity.PhoneNumberActivity" />
+        <activity android:name=".Activity.PhoneNumberActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activity.UserInformationActivity" />
         <activity android:name=".Activity.VerifyOtpActivity" />
     </application>
