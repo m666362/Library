@@ -11,6 +11,7 @@
 
 
     <string name="phoneNumber">Enter Phone Number</string>
+    <string name="Enter_otp">Enter OTP</string>
     <string name="cancelbutton">Cancel</string>
     <string name="sendbutton">Send</string>
 </resources>
