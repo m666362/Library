@@ -3,13 +3,16 @@ package com.rich_it.library.Fragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +33,7 @@ import org.json.JSONArray;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.rich_it.library.Activity.GoogleMapActivity;
 import com.rich_it.library.Activity.NavigationActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
@@ -55,6 +59,9 @@ public class DashboardFragment extends Fragment {
     private BookViewModel viewModel;
     ArrayList<Book> myBooks = new ArrayList<>() ;
     boolean isLoading = false;
+    private int load = 1;
+    ScrollView scrollView;
+    Button getLocationButton;
 
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
@@ -76,8 +83,17 @@ public class DashboardFragment extends Fragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        BookViewModel.page = 0;
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.dashboard_fragment, container, false);
         return root;
+    }
+
+    @Nullable
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public View getView() {
+        return super.getView();
+
     }
 
     @Override
@@ -85,7 +101,16 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pb = view.findViewById(R.id.dashpbLoading);
         pb.setVisibility(ProgressBar.VISIBLE);
+        scrollView = view.findViewById(R.id.parent_scroll);
         activity =  getActivity();
+        getLocationButton = view.findViewById(R.id.getLocationButton_f);
+        getLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), GoogleMapActivity.class);
+                startActivity(intent);
+            }
+        });
 
         nearbyBookRecyclerView = view.findViewById(R.id.nearby_book_rv_f);
         nearbyBookAdapter = new NearbyBookAdapter(getActivity());
@@ -115,40 +140,76 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                isLoading = false;
                 Toast.makeText(listener, "changed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
-//                myBooks.add((NavigationActivity) activity).getBooks());
                 super.onScrolled(recyclerView, dx, dy);
-                int total = linearLayoutManager.getItemCount();
-                int firstVisibleItemCount = linearLayoutManager.findFirstVisibleItemPosition();
-                int FirstCompletelyVisibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-                int LastCompletelyVisibleItemPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-                int diff= LastCompletelyVisibleItemPosition - FirstCompletelyVisibleItemPosition;
-                int lastVisibleItemCount = linearLayoutManager.findLastVisibleItemPosition();
-                Toast.makeText(listener, Integer.toString(diff), Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "total: " + total + " firstVisibleItemCount: " + firstVisibleItemCount +  " lastVisibleItemCount: " + lastVisibleItemCount + " diff: " + diff);
 
-                if (isLoading) {
-                    if (total > 0){
-                        if ((total - 1) == lastVisibleItemCount){
-                            pb.setVisibility(View.VISIBLE);
-                            viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
-                                // update UI
-                                if (books.size()==0)
-                                    Toast.makeText(getActivity(), "Enough is enough", Toast.LENGTH_SHORT).show();
-                                myBooks.addAll(books);
-                                suggestedBookAdapter.setBooks( myBooks);
-                                pb.setVisibility(ProgressBar.GONE);
-                            });
-                        }else{
-                            pb.setVisibility(View.GONE);
-                        }
-                    }
+
+                int firstVisibleItemCount = linearLayoutManager.findFirstVisibleItemPosition();
+
+                int FirstCompletelyVisibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
+                int LastCompletelyVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
+                int diff= LastCompletelyVisibleItemPosition - FirstCompletelyVisibleItemPosition;
+                int curr = linearLayoutManager.findLastVisibleItemPosition();
+
+                int total = linearLayoutManager.getItemCount();
+                float y = recyclerView.getY() + recyclerView.getChildAt(LastCompletelyVisibleItemPosition).getY();
+                Toast.makeText(listener, Integer.toString((int)y), Toast.LENGTH_SHORT).show();
+
+//                scrollView.smoothScrollTo(0, (int) y);
+                if(true){
+                    pb.setVisibility(View.VISIBLE);
+                    viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
+                        // update UI
+                        if (books.size()==0)
+                            Toast.makeText(getActivity(), "All books are loaded", Toast.LENGTH_SHORT).show();
+                        myBooks.addAll(books);
+                        suggestedBookAdapter.setBooks( myBooks);
+                        nearbyBookAdapter.setBooks(myBooks);
+                        pb.setVisibility(ProgressBar.GONE);
+                        load++;
+                    });
                 }
+                int lastVisibleItemCount = linearLayoutManager.findLastVisibleItemPosition();
+//                if(4*load > total-4){
+//                    pb.setVisibility(View.VISIBLE);
+//                    viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
+//                        // update UI
+//                        if (books.size()==0)
+//                            Toast.makeText(getActivity(), "All books are loaded", Toast.LENGTH_SHORT).show();
+//                        myBooks.addAll(books);
+//                        suggestedBookAdapter.setBooks( myBooks);
+//                        nearbyBookAdapter.setBooks(myBooks);
+//                        pb.setVisibility(ProgressBar.GONE);
+//                        load++;
+//                    });
+//                }
+//                Toast.makeText(listener, Integer.toString(diff), Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, "total: " + total );
+//
+//                if (!isLoading) {
+//                    isLoading = true;
+//                    if (total > 0){
+//                        if ((total - 1) == lastVisibleItemCount){
+//                            pb.setVisibility(View.VISIBLE);
+//                            viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
+//                                // update UI
+//                                if (books.size()==0)
+//                                    Toast.makeText(getActivity(), "All books are loaded", Toast.LENGTH_SHORT).show();
+//                                myBooks.addAll(books);
+//                                suggestedBookAdapter.setBooks( myBooks);
+//                                nearbyBookAdapter.setBooks(myBooks);
+//                                isLoading = false;
+//                                pb.setVisibility(ProgressBar.GONE);
+//                            });
+//                        }else{
+//                            pb.setVisibility(View.GONE);
+//                        }
+//                    }
+//                }
             }
         });
     }

@@ -22,4 +22,6 @@ public class NearbyBookFragment extends Fragment {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.nearbyres_fragment, container, false);
         return root;
     }
+
+
 }

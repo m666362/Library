@@ -69,7 +69,6 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
         setContentView(R.layout.activity_navigation);
 
         viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
-        createList();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         slidingRootNav = new SlidingRootNavBuilder(this)
@@ -101,14 +100,6 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(drawerAdapter);
         drawerAdapter.setSelected(POS_DASHBOARD);
-    }
-
-    public ArrayList<Book> createList() {
-        viewModel.getBooks().observe((LifecycleOwner) getViewModelStore(), books -> {
-            // update UI
-            mybooks.addAll(books);
-        });
-        return mybooks;
     }
 
 

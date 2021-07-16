@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BookViewModel extends ViewModel {
-    int page = 0;
+    public static int page = 0;
     private static final String TAG = "hello";
     private MutableLiveData<List<Book>> books;
 

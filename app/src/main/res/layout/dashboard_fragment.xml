@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/parent_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -33,19 +34,40 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/search_text_input"
+                android:id="@+id/nearby_book_tv"
+                android:textSize="24sp"
+                android:layout_marginLeft="24dp"
+                android:textColor="@color/colorPrimaryText"
+                android:text="Nearby Books"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@id/nearby_book_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/nearby_book_rv_f"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:layout_below="@id/nearby_book_rv_f"
+                android:id="@+id/suggested_book_tv"
+                android:textSize="24sp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:text="Suggested Books"/>
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:layout_below="@+id/nearby_book_rv_f"
+                android:layout_below="@+id/suggested_book_tv"
                 android:id="@+id/suggested_book_rv_f"/>
 
             <ProgressBar
@@ -55,6 +77,15 @@
                 android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dp"
+                android:text="Get Location"
+                android:layout_below="@+id/dashpbLoading"
+                android:id="@+id/getLocationButton_f"/>
 
         </RelativeLayout>
 
