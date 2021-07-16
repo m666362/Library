@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createCategories() {
-        BookServerCalling.getBooks(new StringRequestListener() {
+        BookServerCalling.getBooks(1, new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 pb.setVisibility(ProgressBar.INVISIBLE);
@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void initObject() {
         getLocationButton = findViewById(R.id.getLocationButton);
         nearbyBooksRV = findViewById(R.id.nearby_book_rv);
-        nearbyBookAdapter = new NearbyBookAdapter(this, books);
+        nearbyBookAdapter = new NearbyBookAdapter(this);
         suggestedBookRV = findViewById(R.id.suggested_book_rv);
         suggestedBookAdapter = new SuggestedBookAdapter(this);
 

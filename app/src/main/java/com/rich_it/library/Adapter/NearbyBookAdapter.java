@@ -21,29 +21,26 @@ import java.util.List;
 
 public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.ViewHolder> {
     Context context;
-    List<Book> books;
+    List<Book> books = new ArrayList<>();
 
-    public NearbyBookAdapter(Context context, List<Book> books) {
+    public NearbyBookAdapter(Context context) {
         this.context = context;
-        this.books = books;
     }
 
     @NonNull
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from( context ).inflate( R.layout.nearby_books, parent, false );
+        View view = LayoutInflater.from( context ).inflate( R.layout.book_card, parent, false );
         return new ViewHolder( view );
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull NearbyBookAdapter.ViewHolder holder, int position) {
-        holder.nameTv.setText(books.get(position).getName());
-        Picasso
-                .get()
-                .load("https://itbook.store/img/books/9781484211830.png")
-                .noFade()
-                .into(holder.coverIv);
+        Book book = books.get(position);
+        holder.nameTv.setText(book.getName());
+        holder.authorTv.setText(book.getAuthor().getName());
+        Picasso.get().load(book.getCoverPage()).into(holder.coverIv);
     }
 
     public void setBooks(ArrayList<Book> books) {

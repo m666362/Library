@@ -44,11 +44,13 @@ import java.util.List;
 
 public class DashboardFragment extends Fragment {
     private static final String TAG = DashboardFragment.class.getName();
-    NearbyBookAdapter adapter;
+    NearbyBookAdapter nearbyBookAdapter;
+    RecyclerView nearbyBookRecyclerView;
     SuggestedBookAdapter suggestedBookAdapter;
     LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
     FragmentActivity listener;
+    Activity activity;
     ProgressBar pb;
     private BookViewModel viewModel;
     ArrayList<Book> myBooks = new ArrayList<>() ;
@@ -83,16 +85,27 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         pb = view.findViewById(R.id.dashpbLoading);
         pb.setVisibility(ProgressBar.VISIBLE);
+        activity =  getActivity();
+
+        nearbyBookRecyclerView = view.findViewById(R.id.nearby_book_rv_f);
+        nearbyBookAdapter = new NearbyBookAdapter(getActivity());
+        nearbyBookRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        nearbyBookRecyclerView.setNestedScrollingEnabled(false);
+        nearbyBookRecyclerView.setAdapter(nearbyBookAdapter);
+
         recyclerView = view.findViewById(R.id.suggested_book_rv_f);
         suggestedBookAdapter = new SuggestedBookAdapter(getActivity());
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(suggestedBookAdapter);
+
+
         viewModel = ViewModelProviders.of(listener).get(BookViewModel.class);
         viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
             // update UI
             myBooks.addAll(books);
+            nearbyBookAdapter.setBooks(myBooks);
             suggestedBookAdapter.setBooks( myBooks);
             pb.setVisibility(ProgressBar.GONE);
         });
@@ -108,6 +121,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
+//                myBooks.add((NavigationActivity) activity).getBooks());
                 super.onScrolled(recyclerView, dx, dy);
                 int total = linearLayoutManager.getItemCount();
                 int firstVisibleItemCount = linearLayoutManager.findFirstVisibleItemPosition();
@@ -118,15 +132,14 @@ public class DashboardFragment extends Fragment {
                 Toast.makeText(listener, Integer.toString(diff), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "total: " + total + " firstVisibleItemCount: " + firstVisibleItemCount +  " lastVisibleItemCount: " + lastVisibleItemCount + " diff: " + diff);
 
-                //to avoid multiple calls to loadMore() method
-                //maintain a boolean value (isLoading). if loadMore() task started set to true and completes set to false
-                if (!isLoading) {
-                    isLoading = true;
+                if (isLoading) {
                     if (total > 0){
                         if ((total - 1) == lastVisibleItemCount){
                             pb.setVisibility(View.VISIBLE);
                             viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
                                 // update UI
+                                if (books.size()==0)
+                                    Toast.makeText(getActivity(), "Enough is enough", Toast.LENGTH_SHORT).show();
                                 myBooks.addAll(books);
                                 suggestedBookAdapter.setBooks( myBooks);
                                 pb.setVisibility(ProgressBar.GONE);
@@ -166,7 +179,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Activity activity = (NavigationActivity) getActivity();
+        activity = (NavigationActivity) getActivity();
         ArrayList<Book> books = ((NavigationActivity) activity).getBooks();
         new Handler().postDelayed(new Runnable() {
             @Override

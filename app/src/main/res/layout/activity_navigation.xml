@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorAccent"
+    android:background="@color/colorSecondaryDark"
     tools:context=".Activity.NavigationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -14,9 +14,12 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            app:theme="@style/ToolbarColoredDash"
+            app:titleTextColor="@color/colorPrimaryText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary" />
+            android:background="@color/colorPrimaryDark"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout

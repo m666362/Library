@@ -15,9 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class BookViewModel extends ViewModel {
-
+    int page = 0;
     private static final String TAG = "hello";
     private MutableLiveData<List<Book>> books;
+
     public LiveData<List<Book>> getBooks() {
         if (true) {
             books = new MutableLiveData<List<Book>>();
@@ -27,10 +28,10 @@ public class BookViewModel extends ViewModel {
     }
 
     private void loadBooks() {
-        BookServerCalling.getBooks(new StringRequestListener() {
-
+        BookServerCalling.getBooks(page++, new StringRequestListener() {
             @Override
             public void onResponse(String response) {
+                Log.d(TAG, "onResponse: " +page);
                 Book[] books1 = new Gson().fromJson(response, Book[].class);
                 books.setValue(Arrays.asList(books1));
             }
@@ -42,4 +43,8 @@ public class BookViewModel extends ViewModel {
         });
         // Do an asynchronous operation to fetch Books.
     }
+
+//    public void updateData() {
+//        loadBooks().setValue(myDataClass.getNewData());
+//    }
 }

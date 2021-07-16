@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +16,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidnetworking.error.ANError;
@@ -47,13 +51,14 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     private static final int POS_ABOUT_US = 5;
     private static final int POS_lOGOUT = 6;
     private static final String TAG = NavigationActivity.class.getName();
+    BookViewModel viewModel;
 
     private String[] screenTitles;
     private Drawable[] screenIcons;
     private SlidingRootNav slidingRootNav;
 
     Toolbar toolbar;
-    ArrayList<Book> books = new ArrayList<>();
+    ArrayList<Book> mybooks = new ArrayList<>();
     ArrayList<Book> tempBooks = new ArrayList<>();
 
 
@@ -63,7 +68,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_navigation);
 
-
+        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         createList();
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -98,32 +103,23 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
         drawerAdapter.setSelected(POS_DASHBOARD);
     }
 
-    private void createList() {
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
-//        books.add(new Book("Islami", "Author", "Publication", "300", "3", R.drawable.amu_bubble_mask));
+    public ArrayList<Book> createList() {
+        viewModel.getBooks().observe((LifecycleOwner) getViewModelStore(), books -> {
+            // update UI
+            mybooks.addAll(books);
+        });
+        return mybooks;
     }
 
+
     public ArrayList<Book> getBooks() {
-        BookServerCalling.getBooks(new StringRequestListener() {
+        BookServerCalling.getBooks(1, new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 try {
                     Book[] books1 = new Gson().fromJson(response, Book[].class);
                     tempBooks = new ArrayList<>( Arrays.asList( books1 ) );
-                    books.addAll(tempBooks);
+                    mybooks.addAll(tempBooks);
 //                    return books;
 //                    suggestedBookAdapter.setBooks(books);
                 }catch (Exception e){
@@ -137,7 +133,7 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
                 Log.d(TAG, "onError: " + anError);
             }
         });
-        return books;
+        return mybooks;
         // do anything with response
         // handle error
     }
