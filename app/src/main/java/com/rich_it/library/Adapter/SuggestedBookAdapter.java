@@ -32,7 +32,7 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
     @NotNull
     @Override
     public SuggestedBookAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.suggested_books, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_view_suggestion, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,9 +41,8 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
         Book book = books.get(position);
         holder.name.setText(book.getName());
         holder.author.setText(book.getAuthor().getName());
-        holder.publication.setText(book.getPublication().getName());
-        holder.pageNumber.setText(String.valueOf( book.getRent()));
-        holder.price.setText(String.valueOf( book.getActualPrice()));
+        holder.pageNumber.setText("Page: " + String.valueOf( book.getRent()) );
+        holder.price.setText("BDT: " + String.valueOf( book.getActualPrice()));
         Picasso.get().load(book.getCoverPage()).into(holder.coverIv);
     }
 
@@ -60,7 +59,6 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView author;
-        TextView publication;
         TextView pageNumber;
         TextView price;
         ImageView coverIv;
@@ -70,7 +68,6 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
             super(itemView);
             name = itemView.findViewById(R.id.book_name_tv);
             author = itemView.findViewById(R.id.book_author_tv);
-            publication = itemView.findViewById(R.id.book_publication_tv);
             pageNumber = itemView.findViewById(R.id.book_page_tv);
             price = itemView.findViewById(R.id.book_price_tv);
             coverIv = itemView.findViewById(R.id.book_cover_tv);

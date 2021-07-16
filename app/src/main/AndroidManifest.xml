@@ -15,7 +15,11 @@
         android:theme="@style/Theme.Library">
         <activity android:name=".Activity.NavigationActivity"></activity>
         <activity android:name=".Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Activity.GoogleMapActivity" />
         <!--
@@ -32,11 +36,7 @@
 
         <activity android:name=".Activity.HomeActivity"></activity>
         <activity android:name=".Activity.PhoneNumberActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Activity.UserInformationActivity" />
         <activity android:name=".Activity.VerifyOtpActivity" />
