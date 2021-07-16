@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,8 +28,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.TimeUnit;
 
 public class VerifyOtpActivity extends AppCompatActivity implements View.OnClickListener {
-    Button verifyOtpButton;
-    EditText verifyOtpEt;
+    TextInputLayout otpTextInput ;
+    TextInputEditText otpEditText;
+    MaterialButton verifyOtpButton ;
     private FirebaseAuth mAuth;
     String verificationCodeBySystem = "";
     String code = "";
@@ -68,9 +72,10 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private void initObjects() {
         intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
-        verifyOtpButton = findViewById(R.id.verifyOtpButton);
         mAuth = FirebaseAuth.getInstance();
-        verifyOtpEt = findViewById(R.id.otpEt);
+        verifyOtpButton = findViewById(R.id.verifyOtpButton);
+        otpTextInput = findViewById(R.id.otp_text_input);
+        otpEditText = findViewById(R.id.otp_edit_text);
     }
 
     // callback fun of PhoneAuthProvider.verifyPhoneNumber(options)
@@ -100,7 +105,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.verifyOtpButton:
-                code = verifyOtpEt.getText().toString().trim();
+                code = otpEditText.getText().toString().trim();
                 verifyCode(code);
                 break;
         }

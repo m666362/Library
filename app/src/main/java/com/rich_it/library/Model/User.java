@@ -23,6 +23,14 @@ public class User implements Parcelable {
         this.name = name;
     }
 
+    public User(String name, String email, String location, String phoneNumber, String password) {
+        this.name = name;
+        this.email = email;
+        this.location = location;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
+
     public User(String _id, String name, String email, String location, String physicalAddress, String phoneNumber, String imageUrl, String referCode, Boolean isValidReferCode, String password, String status, String createdAt, String updatedAt, String __v) {
         this._id = _id;
         this.name = name;
