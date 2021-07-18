@@ -15,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class NearbyBookFragment extends Fragment {
 
+
+
     @Nullable
     @org.jetbrains.annotations.Nullable
     @Override

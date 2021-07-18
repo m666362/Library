@@ -20,7 +20,7 @@ public class BookViewModel extends ViewModel {
     private MutableLiveData<List<Book>> books;
 
     public LiveData<List<Book>> getBooks() {
-        if (true) {
+        if (books == null) {
             books = new MutableLiveData<List<Book>>();
             loadBooks();
         }

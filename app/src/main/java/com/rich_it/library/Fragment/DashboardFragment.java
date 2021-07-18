@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DashboardFragment extends Fragment {
+
     private static final String TAG = DashboardFragment.class.getName();
     NearbyBookAdapter nearbyBookAdapter;
     RecyclerView nearbyBookRecyclerView;
@@ -173,6 +174,7 @@ public class DashboardFragment extends Fragment {
                         load++;
                     });
                 }
+
                 int lastVisibleItemCount = linearLayoutManager.findLastVisibleItemPosition();
 //                if(4*load > total-4){
 //                    pb.setVisibility(View.VISIBLE);
