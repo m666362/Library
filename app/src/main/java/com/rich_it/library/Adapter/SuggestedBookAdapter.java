@@ -56,6 +56,10 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
         notifyDataSetChanged();
     }
 
+    public List<Book> getBooks() {
+        return books;
+    }
+
     @Override
     public int getItemCount() {
         return books.size();

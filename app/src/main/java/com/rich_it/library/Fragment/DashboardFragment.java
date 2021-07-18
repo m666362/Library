@@ -34,6 +34,7 @@ import com.rich_it.library.Activity.NavigationActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
+import com.rich_it.library.Others.GlobalVars;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.BookServerCalling;
 import com.rich_it.library.ViewModel.BookViewModel;
@@ -59,7 +60,6 @@ public class DashboardFragment extends Fragment {
     ProgressBar pb;
     Button getLocationButton;
 
-    ArrayList<Book> bookArrayList = new ArrayList<>();
     int pageNumber = 0;
     int itemsPerPage = 10;
 
@@ -134,7 +134,11 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        getBooks();
+        if (GlobalVars.bookArrayList.size() == 0) {
+            getBooks();
+        } else {
+            suggestedBookAdapter.setBooks(GlobalVars.bookArrayList);
+        }
     }
 
     private void getBooks() {
@@ -144,13 +148,13 @@ public class DashboardFragment extends Fragment {
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: Page: " + pageNumber);
 
-                Book[] books = new Gson().fromJson(response, Book[].class);
-                bookArrayList = new ArrayList<>(Arrays.asList(books));
                 if (pageNumber == 0) {
-                    suggestedBookAdapter.setBooks(bookArrayList);
+                    suggestedBookAdapter.setBooks(new ArrayList<>(Arrays.asList(new Gson().fromJson(response, Book[].class))));
                 } else {
-                    suggestedBookAdapter.addBooks(bookArrayList);
+                    suggestedBookAdapter.addBooks(new ArrayList<>(Arrays.asList(new Gson().fromJson(response, Book[].class))));
                 }
+
+                GlobalVars.bookArrayList = (ArrayList<Book>) suggestedBookAdapter.getBooks();
 
                 pb.setVisibility(View.GONE);
             }
