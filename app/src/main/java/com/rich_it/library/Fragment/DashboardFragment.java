@@ -58,6 +58,8 @@ public class DashboardFragment extends Fragment {
     Button getLocationButton;
 
     ArrayList<Book> bookArrayList = new ArrayList<>();
+    int pageNumber = 1;
+    int itemsPerPage = 5;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -80,7 +82,6 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         pb = view.findViewById(R.id.dashpbLoading);
-        pb.setVisibility(ProgressBar.VISIBLE);
         scrollView = view.findViewById(R.id.parent_scroll);
         activity = getActivity();
         getLocationButton = view.findViewById(R.id.getLocationButton_f);
@@ -105,20 +106,61 @@ public class DashboardFragment extends Fragment {
         recyclerViewSuggestedBooks.setNestedScrollingEnabled(false);
         recyclerViewSuggestedBooks.setAdapter(suggestedBookAdapter);
 
-        BookServerCalling.getBooks(1, new StringRequestListener() {
+        recyclerViewSuggestedBooks.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                Log.d(TAG, "onScrolled: ");
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                Log.d(TAG, "onScrollStateChanged: ");
+
+                int visibleItemCount = linearLayoutManager.getChildCount();
+                int totalItemCount = linearLayoutManager.getItemCount();
+                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+                int pntbs = totalItemCount / itemsPerPage;
+
+                if (pntbs != pageNumber) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= itemsPerPage) {
+
+                        pageNumber = pntbs;
+                        getBooks();
+                    }
+                }
+            }
+        });
+
+        getBooks();
+    }
+
+    private void getBooks() {
+        pb.setVisibility(View.VISIBLE);
+        BookServerCalling.getBooks(pageNumber, new StringRequestListener() {
             @Override
             public void onResponse(String response) {
+                Log.d(TAG, "onResponse: Page: " + pageNumber);
+
                 Book[] books = new Gson().fromJson(response, Book[].class);
                 bookArrayList = new ArrayList<>(Arrays.asList(books));
-                suggestedBookAdapter.setBooks(bookArrayList);
+                if (pageNumber == 1) {
+                    suggestedBookAdapter.setBooks(bookArrayList);
+                } else {
+                    suggestedBookAdapter.addBooks(bookArrayList);
+                }
+
+                pb.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(ANError anError) {
-
+                pb.setVisibility(View.GONE);
             }
         });
-
     }
 
     public static DashboardFragment newInstance(int someInt, String someTitle) {

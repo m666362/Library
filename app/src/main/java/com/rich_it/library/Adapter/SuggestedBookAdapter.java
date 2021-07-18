@@ -41,13 +41,18 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
         Book book = books.get(position);
         holder.name.setText(book.getName());
         holder.author.setText(book.getAuthor().getName());
-        holder.pageNumber.setText("Page: " + String.valueOf( book.getRent()) );
-        holder.price.setText("BDT: " + String.valueOf( book.getActualPrice()));
+        holder.pageNumber.setText("Page: " + String.valueOf(book.getRent()));
+        holder.price.setText("BDT: " + String.valueOf(book.getActualPrice()));
         Picasso.get().load(book.getCoverPage()).into(holder.coverIv);
     }
 
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
+        notifyDataSetChanged();
+    }
+
+    public void addBooks(ArrayList<Book> books) {
+        this.books.addAll(books);
         notifyDataSetChanged();
     }
 
