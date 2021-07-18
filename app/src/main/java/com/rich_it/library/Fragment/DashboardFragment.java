@@ -1,7 +1,6 @@
 package com.rich_it.library.Fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,55 +18,50 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.lifecycle.ViewModelStore;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.rich_it.library.Activity.GoogleMapActivity;
 import com.rich_it.library.Activity.NavigationActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
-import com.rich_it.library.ServerCalling.OtherServerCaling;
 import com.rich_it.library.R;
 import com.rich_it.library.ViewModel.BookViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class DashboardFragment extends Fragment {
 
     private static final String TAG = DashboardFragment.class.getName();
+
     NearbyBookAdapter nearbyBookAdapter;
-    RecyclerView nearbyBookRecyclerView;
     SuggestedBookAdapter suggestedBookAdapter;
+
+    RecyclerView nearbyBookRecyclerView;
+    RecyclerView recyclerViewSuggestedBooks;
+
     LinearLayoutManager linearLayoutManager;
-    RecyclerView recyclerView;
+
     FragmentActivity listener;
     Activity activity;
+
+    ScrollView scrollView;
     ProgressBar pb;
+    Button getLocationButton;
+
+    ArrayList<Book> myBooks = new ArrayList<>();
     private BookViewModel viewModel;
-    ArrayList<Book> myBooks = new ArrayList<>() ;
     boolean isLoading = false;
     private int load = 1;
-    ScrollView scrollView;
-    Button getLocationButton;
 
     @Override
     public void onAttach(@NonNull @NotNull Context context) {
         super.onAttach(context);
-        if (context instanceof Activity){
+        if (context instanceof Activity) {
             this.listener = (FragmentActivity) context;
         }
     }
@@ -103,7 +97,7 @@ public class DashboardFragment extends Fragment {
         pb = view.findViewById(R.id.dashpbLoading);
         pb.setVisibility(ProgressBar.VISIBLE);
         scrollView = view.findViewById(R.id.parent_scroll);
-        activity =  getActivity();
+        activity = getActivity();
         getLocationButton = view.findViewById(R.id.getLocationButton_f);
         getLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,12 +113,12 @@ public class DashboardFragment extends Fragment {
         nearbyBookRecyclerView.setNestedScrollingEnabled(false);
         nearbyBookRecyclerView.setAdapter(nearbyBookAdapter);
 
-        recyclerView = view.findViewById(R.id.suggested_book_rv_f);
+        recyclerViewSuggestedBooks = view.findViewById(R.id.suggested_book_rv_f);
         suggestedBookAdapter = new SuggestedBookAdapter(getActivity());
         linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setAdapter(suggestedBookAdapter);
+        recyclerViewSuggestedBooks.setLayoutManager(linearLayoutManager);
+        recyclerViewSuggestedBooks.setNestedScrollingEnabled(false);
+        recyclerViewSuggestedBooks.setAdapter(suggestedBookAdapter);
 
 
         viewModel = ViewModelProviders.of(listener).get(BookViewModel.class);
@@ -132,12 +126,13 @@ public class DashboardFragment extends Fragment {
             // update UI
             myBooks.addAll(books);
             nearbyBookAdapter.setBooks(myBooks);
-            suggestedBookAdapter.setBooks( myBooks);
+            suggestedBookAdapter.setBooks(myBooks);
             pb.setVisibility(ProgressBar.GONE);
         });
 
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerViewSuggestedBooks.setOnScrollListener(new RecyclerView.OnScrollListener() {
             int ydy = 0;
+
             @Override
             public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -153,22 +148,22 @@ public class DashboardFragment extends Fragment {
 
                 int FirstCompletelyVisibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
                 int LastCompletelyVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
-                int diff= LastCompletelyVisibleItemPosition - FirstCompletelyVisibleItemPosition;
+                int diff = LastCompletelyVisibleItemPosition - FirstCompletelyVisibleItemPosition;
                 int curr = linearLayoutManager.findLastVisibleItemPosition();
 
                 int total = linearLayoutManager.getItemCount();
                 float y = recyclerView.getY() + recyclerView.getChildAt(LastCompletelyVisibleItemPosition).getY();
-                Toast.makeText(listener, Integer.toString((int)y), Toast.LENGTH_SHORT).show();
+                Toast.makeText(listener, Integer.toString((int) y), Toast.LENGTH_SHORT).show();
 
 //                scrollView.smoothScrollTo(0, (int) y);
-                if(true){
+                if (true) {
                     pb.setVisibility(View.VISIBLE);
                     viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
                         // update UI
-                        if (books.size()==0)
+                        if (books.size() == 0)
                             Toast.makeText(getActivity(), "All books are loaded", Toast.LENGTH_SHORT).show();
                         myBooks.addAll(books);
-                        suggestedBookAdapter.setBooks( myBooks);
+                        suggestedBookAdapter.setBooks(myBooks);
                         nearbyBookAdapter.setBooks(myBooks);
                         pb.setVisibility(ProgressBar.GONE);
                         load++;
@@ -238,7 +233,6 @@ public class DashboardFragment extends Fragment {
     }
 
 
-
     @Override
     public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -249,6 +243,6 @@ public class DashboardFragment extends Fragment {
             public void run() {
 
             }
-        },3000);
+        }, 3000);
     }
 }
