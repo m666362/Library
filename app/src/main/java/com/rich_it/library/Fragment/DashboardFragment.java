@@ -24,15 +24,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
 import com.rich_it.library.Activity.GoogleMapActivity;
 import com.rich_it.library.Activity.NavigationActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.R;
+import com.rich_it.library.ServerCalling.BookServerCalling;
 import com.rich_it.library.ViewModel.BookViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DashboardFragment extends Fragment {
 
@@ -46,15 +51,13 @@ public class DashboardFragment extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
 
-    FragmentActivity listener;
     Activity activity;
 
     ScrollView scrollView;
     ProgressBar pb;
     Button getLocationButton;
 
-    ArrayList<Book> myBooks = new ArrayList<>();
-    private BookViewModel viewModel;
+    ArrayList<Book> bookArrayList = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -102,7 +105,19 @@ public class DashboardFragment extends Fragment {
         recyclerViewSuggestedBooks.setNestedScrollingEnabled(false);
         recyclerViewSuggestedBooks.setAdapter(suggestedBookAdapter);
 
+        BookServerCalling.getBooks(1, new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                Book[] books = new Gson().fromJson(response, Book[].class);
+                bookArrayList = new ArrayList<>(Arrays.asList(books));
+                suggestedBookAdapter.setBooks(bookArrayList);
+            }
 
+            @Override
+            public void onError(ANError anError) {
+
+            }
+        });
 
     }
 
