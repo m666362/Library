@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -53,13 +55,13 @@ public class DashboardFragment extends Fragment {
 
     Activity activity;
 
-    ScrollView scrollView;
+    NestedScrollView scrollView;
     ProgressBar pb;
     Button getLocationButton;
 
     ArrayList<Book> bookArrayList = new ArrayList<>();
-    int pageNumber = 1;
-    int itemsPerPage = 5;
+    int pageNumber = 0;
+    int itemsPerPage = 10;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -106,29 +108,26 @@ public class DashboardFragment extends Fragment {
         recyclerViewSuggestedBooks.setNestedScrollingEnabled(false);
         recyclerViewSuggestedBooks.setAdapter(suggestedBookAdapter);
 
-        recyclerViewSuggestedBooks.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                Log.d(TAG, "onScrolled: ");
-            }
+            public void onScrollChanged() {
+                View view = (View) scrollView.getChildAt(scrollView.getChildCount() - 1);
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
+                int diff = (view.getBottom() - (scrollView.getHeight() + scrollView
+                        .getScrollY()));
 
-                Log.d(TAG, "onScrollStateChanged: ");
+//                Log.d(TAG, "onScrollChanged: " + diff);
 
-                int visibleItemCount = linearLayoutManager.getChildCount();
-                int totalItemCount = linearLayoutManager.getItemCount();
-                int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
-                int pntbs = totalItemCount / itemsPerPage;
+                if (diff == 0) {
+                    int visibleItemCount = linearLayoutManager.getChildCount();
+                    int totalItemCount = linearLayoutManager.getItemCount();
+                    int firstVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition();
+                    int pntbs = totalItemCount / itemsPerPage;
+                    Log.d(TAG, "onScrollChanged: PPP " + String.format("visibleItemCount: %d totalItemCount: %d firstVisibleItemPosition: %d pntbs: %d", visibleItemCount, totalItemCount, firstVisibleItemPosition, pntbs));
 
-                if (pntbs != pageNumber) {
-                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                            && firstVisibleItemPosition >= 0
-                            && totalItemCount >= itemsPerPage) {
-
+                    if (pntbs != pageNumber) {
                         pageNumber = pntbs;
+                        Log.d(TAG, "onScrollChanged: Pag: " + pageNumber);
                         getBooks();
                     }
                 }
@@ -147,7 +146,7 @@ public class DashboardFragment extends Fragment {
 
                 Book[] books = new Gson().fromJson(response, Book[].class);
                 bookArrayList = new ArrayList<>(Arrays.asList(books));
-                if (pageNumber == 1) {
+                if (pageNumber == 0) {
                     suggestedBookAdapter.setBooks(bookArrayList);
                 } else {
                     suggestedBookAdapter.addBooks(bookArrayList);
@@ -158,6 +157,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onError(ANError anError) {
+                Log.d(TAG, "onError: ");
                 pb.setVisibility(View.GONE);
             }
         });

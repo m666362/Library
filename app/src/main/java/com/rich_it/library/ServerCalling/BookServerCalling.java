@@ -10,8 +10,9 @@ public class BookServerCalling {
 
     private static String TAG = BookServerCalling.class.getName();
 
-    public static void getBooks (int page, StringRequestListener listener) {
-        AndroidNetworking.get(Constant.baseUrl + Constant.books)
+    public static void getBooks(int page, StringRequestListener listener) {
+        String url = Constant.baseUrl + Constant.books;
+        AndroidNetworking.get(url)
                 .setTag(TAG)
                 .addQueryParameter("page", Integer.toString(page))
                 .setPriority(Priority.LOW)
