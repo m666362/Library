@@ -55,16 +55,6 @@ public class DashboardFragment extends Fragment {
 
     ArrayList<Book> myBooks = new ArrayList<>();
     private BookViewModel viewModel;
-    boolean isLoading = false;
-    private int load = 1;
-
-    @Override
-    public void onAttach(@NonNull @NotNull Context context) {
-        super.onAttach(context);
-        if (context instanceof Activity) {
-            this.listener = (FragmentActivity) context;
-        }
-    }
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -78,22 +68,14 @@ public class DashboardFragment extends Fragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        BookViewModel.page = 0;
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.dashboard_fragment, container, false);
         return root;
-    }
-
-    @Nullable
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public View getView() {
-        return super.getView();
-
     }
 
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         pb = view.findViewById(R.id.dashpbLoading);
         pb.setVisibility(ProgressBar.VISIBLE);
         scrollView = view.findViewById(R.id.parent_scroll);
@@ -121,94 +103,7 @@ public class DashboardFragment extends Fragment {
         recyclerViewSuggestedBooks.setAdapter(suggestedBookAdapter);
 
 
-        viewModel = ViewModelProviders.of(listener).get(BookViewModel.class);
-        viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
-            // update UI
-            myBooks.addAll(books);
-            nearbyBookAdapter.setBooks(myBooks);
-            suggestedBookAdapter.setBooks(myBooks);
-            pb.setVisibility(ProgressBar.GONE);
-        });
 
-        recyclerViewSuggestedBooks.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int ydy = 0;
-
-            @Override
-            public void onScrollStateChanged(@NonNull @NotNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                Toast.makeText(listener, "changed", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onScrolled(@NonNull @NotNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-
-                int firstVisibleItemCount = linearLayoutManager.findFirstVisibleItemPosition();
-
-                int FirstCompletelyVisibleItemPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-                int LastCompletelyVisibleItemPosition = linearLayoutManager.findLastVisibleItemPosition();
-                int diff = LastCompletelyVisibleItemPosition - FirstCompletelyVisibleItemPosition;
-                int curr = linearLayoutManager.findLastVisibleItemPosition();
-
-                int total = linearLayoutManager.getItemCount();
-                float y = recyclerView.getY() + recyclerView.getChildAt(LastCompletelyVisibleItemPosition).getY();
-                Toast.makeText(listener, Integer.toString((int) y), Toast.LENGTH_SHORT).show();
-
-//                scrollView.smoothScrollTo(0, (int) y);
-                if (true) {
-                    pb.setVisibility(View.VISIBLE);
-                    viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
-                        // update UI
-                        if (books.size() == 0)
-                            Toast.makeText(getActivity(), "All books are loaded", Toast.LENGTH_SHORT).show();
-                        myBooks.addAll(books);
-                        suggestedBookAdapter.setBooks(myBooks);
-                        nearbyBookAdapter.setBooks(myBooks);
-                        pb.setVisibility(ProgressBar.GONE);
-                        load++;
-                    });
-                }
-
-                int lastVisibleItemCount = linearLayoutManager.findLastVisibleItemPosition();
-//                if(4*load > total-4){
-//                    pb.setVisibility(View.VISIBLE);
-//                    viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
-//                        // update UI
-//                        if (books.size()==0)
-//                            Toast.makeText(getActivity(), "All books are loaded", Toast.LENGTH_SHORT).show();
-//                        myBooks.addAll(books);
-//                        suggestedBookAdapter.setBooks( myBooks);
-//                        nearbyBookAdapter.setBooks(myBooks);
-//                        pb.setVisibility(ProgressBar.GONE);
-//                        load++;
-//                    });
-//                }
-//                Toast.makeText(listener, Integer.toString(diff), Toast.LENGTH_SHORT).show();
-//                Log.d(TAG, "total: " + total );
-//
-//                if (!isLoading) {
-//                    isLoading = true;
-//                    if (total > 0){
-//                        if ((total - 1) == lastVisibleItemCount){
-//                            pb.setVisibility(View.VISIBLE);
-//                            viewModel.getBooks().observe(getViewLifecycleOwner(), books -> {
-//                                // update UI
-//                                if (books.size()==0)
-//                                    Toast.makeText(getActivity(), "All books are loaded", Toast.LENGTH_SHORT).show();
-//                                myBooks.addAll(books);
-//                                suggestedBookAdapter.setBooks( myBooks);
-//                                nearbyBookAdapter.setBooks(myBooks);
-//                                isLoading = false;
-//                                pb.setVisibility(ProgressBar.GONE);
-//                            });
-//                        }else{
-//                            pb.setVisibility(View.GONE);
-//                        }
-//                    }
-//                }
-            }
-        });
     }
 
     public static DashboardFragment newInstance(int someInt, String someTitle) {
@@ -218,31 +113,5 @@ public class DashboardFragment extends Fragment {
         args.putString("someTitle", someTitle);
         dashboardFragment.setArguments(args);
         return dashboardFragment;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        this.listener = null;
-    }
-
-
-    @Override
-    public void onActivityCreated(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        activity = (NavigationActivity) getActivity();
-        ArrayList<Book> books = ((NavigationActivity) activity).getBooks();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 3000);
     }
 }
