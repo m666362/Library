@@ -3,7 +3,9 @@ package com.rich_it.library.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class User implements Parcelable {
+import java.io.Serializable;
+
+public class User implements Parcelable, Serializable {
     private String _id;
     private String name;
     private String email;

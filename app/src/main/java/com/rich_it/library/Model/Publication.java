@@ -3,9 +3,10 @@ package com.rich_it.library.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Publication implements Parcelable {
+public class Publication implements Parcelable, Serializable {
 
     private String _id;
     private String name;

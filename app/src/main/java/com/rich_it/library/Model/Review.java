@@ -3,7 +3,9 @@ package com.rich_it.library.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Review implements Parcelable {
+import java.io.Serializable;
+
+public class Review implements Parcelable, Serializable {
     private String _id;
     private String bookStar;
     private String ownerStar;
