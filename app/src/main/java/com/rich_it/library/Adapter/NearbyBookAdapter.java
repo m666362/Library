@@ -31,7 +31,7 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from( context ).inflate( R.layout.book_card, parent, false );
+        View view = LayoutInflater.from( context ).inflate( R.layout.card_view_nearby_books, parent, false );
         return new ViewHolder( view );
     }
 

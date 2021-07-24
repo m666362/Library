@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.rich_it.library.Model.Book;
-import com.rich_it.library.Model.Category;
 import com.rich_it.library.R;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +31,7 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
     @NotNull
     @Override
     public SuggestedBookAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_view_suggestion, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_view_suggested_books, parent, false);
         return new ViewHolder(view);
     }
 

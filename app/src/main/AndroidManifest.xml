@@ -35,7 +35,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".Activity.HomeActivity"></activity>
+        <activity android:name=".Activity.BookDetailsActivity"></activity>
         <activity android:name=".Activity.PhoneNumberActivity" >
 
         </activity>
