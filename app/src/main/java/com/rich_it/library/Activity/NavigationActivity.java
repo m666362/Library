@@ -7,8 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +32,6 @@ import com.rich_it.library.Model.SimpleItem;
 import com.rich_it.library.Model.SpaceItem;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.BookServerCalling;
-import com.rich_it.library.ViewModel.BookViewModel;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -51,7 +48,6 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
     private static final int POS_ABOUT_US = 5;
     private static final int POS_lOGOUT = 6;
     private static final String TAG = NavigationActivity.class.getName();
-    BookViewModel viewModel;
 
     private String[] screenTitles;
     private Drawable[] screenIcons;
@@ -68,7 +64,6 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_navigation);
 
-        viewModel = ViewModelProviders.of(this).get(BookViewModel.class);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         slidingRootNav = new SlidingRootNavBuilder(this)
