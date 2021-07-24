@@ -2,6 +2,7 @@ package com.rich_it.library.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,6 +107,7 @@ public class DashboardFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Toast.makeText(getActivity(), GlobalVars.bookArrayList.get(position).getName(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), BookDetailsActivity.class);
+                intent.putExtra("Book", (Parcelable) GlobalVars.bookArrayList.get(position));
                 startActivity(intent);
             }
 

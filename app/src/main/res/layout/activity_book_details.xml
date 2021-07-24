@@ -8,15 +8,163 @@
     tools:context=".Activity.BookDetailsActivity">
 
     <LinearLayout
+        android:orientation="vertical"
+        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="book details activity"/>
+            android:src="@drawable/human"
+            android:id="@+id/book_cover_iv_detailsA"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/book_categories_tv_detailsA"
+            android:text="book categoris"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/book_name_tv_detailsA"
+            android:text="book Name"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/book_author_ll_detailsA">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:src="@drawable/human"
+                android:id="@+id/book_author_iv_detailsA"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerInParent="true"
+                android:id="@+id/book_author_tv_detailsA"
+                android:text="Author Name"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Free Preview"
+            android:id="@+id/book_free_preview_button_detailsA"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/book_price_buy_cart_ll_detailsA">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerInParent="true"
+                android:id="@+id/book_price_tv_detailsA"
+                android:text="Author Name"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Buy Now"
+                android:id="@+id/book_buy_now_button_detailsA"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_account_circle_24"
+                android:id="@+id/book_cart_iv_detailsA"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/book_bio_review_cart_ll_detailsA">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerInParent="true"
+                android:id="@+id/book_bio_tv_Button_detailsA"
+                android:text="Summary"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Review"
+                android:id="@+id/book_review_button_detailsA"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/book_bio_tv_detailsA"
+            android:text="Summary of the book"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/book_suggested_categories_tv_detailsA"
+            android:text="Summary of the book"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/book_write_review_ll_detailsA">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="book_show_dialog_review_button_detailsA"
+                android:id="@+id/book_show_dialog_review_button_detailsA"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_baseline_account_circle_24" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Related books"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/related_book_rv_detailsA"/>
     </LinearLayout>
 
 </ScrollView>
