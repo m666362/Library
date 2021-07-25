@@ -10,9 +10,12 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -63,6 +66,15 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
         super.onCreate(savedInstanceState);
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_navigation);
+
+        // SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        int id = 1;
+        editor.putString("name", "Md Rayhan");
+        editor.putInt("id", id);
+        editor.apply();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

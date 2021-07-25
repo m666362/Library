@@ -23,10 +23,11 @@ import org.jetbrains.annotations.NotNull;
 
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.rich_it.library.Activity.BookDetailsActivity;
 import com.rich_it.library.Activity.GoogleMapActivity;
-import com.rich_it.library.Activity.VerifyOtpActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
@@ -78,16 +79,17 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FloatingActionButton fab = view.findViewById(R.id.fab);
         progressBar = view.findViewById(R.id.dashpbLoading);
         scrollView = view.findViewById(R.id.parent_scroll);
-        getLocationButton = view.findViewById(R.id.getLocationButton_f);
-        getLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), GoogleMapActivity.class);
-                startActivity(intent);
-            }
-        });
+//        getLocationButton = view.findViewById(R.id.getLocationButton_f);
+//        getLocationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), GoogleMapActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         nearbyBookRecyclerView = view.findViewById(R.id.nearby_book_rv_f);
         nearbyBookAdapter = new NearbyBookAdapter(getActivity());
@@ -148,6 +150,14 @@ public class DashboardFragment extends Fragment {
         } else {
             suggestedBookAdapter.setBooks(GlobalVars.bookArrayList);
         }
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Add new book", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void getBooks() {
@@ -184,4 +194,5 @@ public class DashboardFragment extends Fragment {
         dashboardFragment.setArguments(args);
         return dashboardFragment;
     }
+
 }

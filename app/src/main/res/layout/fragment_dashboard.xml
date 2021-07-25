@@ -1,115 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/parent_scroll"
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/parent_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/search_text_input"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryText"
-                android:focusedByDefault="true"
-                android:hint="Search book"
-                android:padding="16dp">
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/search_edittext"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/search_text_input"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:background="@color/colorPrimaryText"
+                    android:focusedByDefault="true"
+                    android:hint="Search book"
+                    android:padding="16dp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/search_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1" />
 
-            <TextView
-                android:id="@+id/nearby_book_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/search_text_input"
-                android:layout_marginLeft="24dp"
-                android:text="Nearby Books"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/nearby_book_rv_f"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nearby_book_tv"
-                android:layout_marginTop="10dp" />
+                <TextView
+                    android:id="@+id/nearby_book_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/search_text_input"
+                    android:layout_marginLeft="24dp"
+                    android:text="Nearby Books"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/suggested_book_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nearby_book_rv_f"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="10dp"
-                android:text="Suggested Books"
-                android:textColor="@color/colorPrimaryText"
-                android:textSize="24sp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/nearby_book_rv_f"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nearby_book_tv"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/suggested_book_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/nearby_book_rv_f"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Suggested Books"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="24sp" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/suggested_book_rv_f"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/suggested_book_tv"
-                android:layout_marginTop="10dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/suggested_book_rv_f"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/suggested_book_tv"
+                    android:layout_marginTop="10dp" />
 
-            <ProgressBar
-                android:id="@+id/dashpbLoading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/suggested_book_rv_f"
-                android:layout_centerInParent="true"
-                android:visibility="visible" />
+                <ProgressBar
+                    android:id="@+id/dashpbLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/suggested_book_rv_f"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible" />
 
-            <Button
-                android:id="@+id/getLocationButton_f"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/dashpbLoading"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
-                android:text="Get Location" />
+                <!--            <Button-->
+                <!--                android:id="@+id/getLocationButton_f"-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:layout_below="@+id/dashpbLoading"-->
+                <!--                android:layout_alignParentBottom="true"-->
+                <!--                android:layout_marginTop="10dp"-->
+                <!--                android:text="Get Location" />-->
 
-        </RelativeLayout>
 
-        <!--        <RelativeLayout-->
-        <!--            android:orientation="vertical"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
 
-        <!--            <ProgressBar-->
-        <!--                android:layout_centerInParent="true"-->
-        <!--                android:id="@+id/dashpbLoading"-->
-        <!--                android:visibility="visible"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content" />-->
+            </RelativeLayout>
 
-        <!--            <Button-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_alignParentBottom="true"-->
-        <!--                android:layout_marginTop="10dp"-->
-        <!--                android:text="Get Location"-->
-        <!--                android:layout_below="@+id/dashpbLoading"-->
-        <!--                android:id="@+id/getLocationButton"/>-->
-        <!--        </RelativeLayout>-->
+            <!--        <RelativeLayout-->
+            <!--            android:orientation="vertical"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content">-->
 
-    </LinearLayout>
+            <!--            <ProgressBar-->
+            <!--                android:layout_centerInParent="true"-->
+            <!--                android:id="@+id/dashpbLoading"-->
+            <!--                android:visibility="visible"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content" />-->
 
-</androidx.core.widget.NestedScrollView>
+            <!--            <Button-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_alignParentBottom="true"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:text="Get Location"-->
+            <!--                android:layout_below="@+id/dashpbLoading"-->
+            <!--                android:id="@+id/getLocationButton"/>-->
+            <!--        </RelativeLayout>-->
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/shrine_logo"
+        android:contentDescription="Add"
+        android:layout_margin="16dp" />
+
+</RelativeLayout>
+
