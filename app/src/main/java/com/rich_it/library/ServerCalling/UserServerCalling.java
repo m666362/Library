@@ -16,5 +16,12 @@ public class UserServerCalling {
                 .getAsString(listener);
     }
 
+    public static void getReferer (String referCode, StringRequestListener listener) {
+//        AndroidNetworking.get(Constant.baseUrl + Constant.users + Constant.byreferCode + referCode)
+        AndroidNetworking.get("https://book-app-nodejs.herokuapp.com/users/byreferCode/referCode")
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsString(listener);
+    }
 
 }

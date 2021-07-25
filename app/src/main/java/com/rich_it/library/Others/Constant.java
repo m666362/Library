@@ -15,7 +15,8 @@ public class Constant {
     public static String histories = "/histories";
     public static String reviews = "/reviews";
     public static String comments = "/comments";
-    public static String byid = "/byid";
+    public static String byid = "/byid/";
+    public static String byreferCode = "/byreferCode/";
 
 
 }

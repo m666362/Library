@@ -33,6 +33,23 @@ android:background="@color/loginPageBackgroundColor"
         android:textAllCaps="true"
         android:textSize="16sp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/ref_code_text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:focusedByDefault="true"
+        android:hint="Enter Reference Code">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ref_code_edit_text"
+            android:focusedByDefault="true"
+            android:inputType="text"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -53,7 +70,6 @@ android:background="@color/loginPageBackgroundColor"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -69,7 +85,7 @@ android:background="@color/loginPageBackgroundColor"
             android:text="Send OTP" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/cancel_button"
+            android:id="@+id/skip_button"
             android:textColor="@color/colorDangerText"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
@@ -78,7 +94,7 @@ android:background="@color/loginPageBackgroundColor"
             android:layout_marginRight="12dp"
             android:layout_toStartOf="@id/sendOtpButton"
             android:layout_toLeftOf="@id/sendOtpButton"
-            android:text="@string/cancelbutton" />
+            android:text="Skip" />
 
     </RelativeLayout>
 

@@ -21,10 +21,6 @@ public class BookDetailsActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        String setting = sharedPreferences.getString("name", "something");
-        Toast.makeText(this, setting, Toast.LENGTH_SHORT).show();
-
         book = (Book) getIntent().getSerializableExtra("Book");
         nameTv = findViewById(R.id.book_name_tv_detailsA);
         nameTv.setText( book.getName() + " " + book.get_id());
