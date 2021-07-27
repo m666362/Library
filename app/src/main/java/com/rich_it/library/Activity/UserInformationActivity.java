@@ -4,18 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.rich_it.library.Model.User;
 import com.rich_it.library.R;
+import com.rich_it.library.ServerCalling.UserServerCalling;
 
 public class UserInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String TAG = UserInformationActivity.class.getName();
     TextInputLayout phoneNumberTextInput, nameTextInput, emailTextInput, passwordTextInput, locationTextInput ;
     TextInputEditText phoneNumberEditText, nameEditText, emailEditText, passwordEditText, locationEditText;
     MaterialButton submitButton;
@@ -70,14 +76,29 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
             case R.id.submitButton:
                 user = getUserInfo();
                 if(validateFrom(user)){
-                    Toast.makeText(this, "Account has been created successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, NavigationActivity.class);
-                    startActivity(intent);
+                    createUserAtDb(user);
                 }else{
                     Toast.makeText(this, "Fullfill required doc", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
+    }
+
+    private void createUserAtDb(User user) {
+        UserServerCalling.createUser(user, new StringRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                // Save data at shared pref
+                Intent intent = new Intent(UserInformationActivity.this, NavigationActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(ANError anError) {
+                Toast.makeText(UserInformationActivity.this, "error", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onError: " + anError);
+            }
+        });
     }
 
     private void saveUser(User user) {
@@ -95,10 +116,15 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     }
 
     private boolean validateFrom(User user) {
-        if (validateName(user.getName()) && validateEmail(user.getEmail()) && validateGender(user.getLocation()) && validatePassword(user.getPassword())) {
+        if (TextUtils.isEmpty(user.getName()) || TextUtils.isEmpty(user.getEmail()) ||
+                TextUtils.isEmpty(user.getLocation()) || TextUtils.isEmpty(user.getPassword()) ||
+                user.getPassword().length() < 6 || !Patterns.EMAIL_ADDRESS.matcher(user.getEmail()).matches()) {
+            Toast.makeText(this, "false", Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            Toast.makeText(this, "true", Toast.LENGTH_SHORT).show();
             return true;
         }
-        return false;
     }
 
     private boolean validatePassword(String password) {

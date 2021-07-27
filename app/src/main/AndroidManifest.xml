@@ -16,6 +16,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Activity.AddBookActivity"></activity>
         <activity android:name=".Activity.NavigationActivity" />
+        <activity android:name=".Activity.UserInformationActivity" />
         <activity android:name=".Activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +39,6 @@
 
         <activity android:name=".Activity.BookDetailsActivity" />
         <activity android:name=".Activity.PhoneNumberActivity"></activity>
-        <activity android:name=".Activity.UserInformationActivity" />
         <activity android:name=".Activity.VerifyOtpActivity" />
     </application>
 

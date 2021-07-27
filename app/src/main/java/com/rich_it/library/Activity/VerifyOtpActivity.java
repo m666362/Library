@@ -35,6 +35,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     String verificationCodeBySystem = "";
     String code = "";
     String phoneNumber = "";
+    String refererId = "";
     Intent intent;
 
     @Override
@@ -64,6 +65,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
             public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
                 Intent intent = new Intent(VerifyOtpActivity.this, UserInformationActivity.class);
                 intent.putExtra("phoneNumber", phoneNumber);
+                intent.putExtra("refererId", refererId);
                 startActivity(intent);
             }
         });
@@ -72,6 +74,7 @@ public class VerifyOtpActivity extends AppCompatActivity implements View.OnClick
     private void initObjects() {
         intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
+        refererId = intent.getStringExtra("refererId");
         mAuth = FirebaseAuth.getInstance();
         verifyOtpButton = findViewById(R.id.verifyOtpButton);
         otpTextInput = findViewById(R.id.otp_text_input);

@@ -26,8 +26,11 @@ import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.rich_it.library.Activity.AddBookActivity;
 import com.rich_it.library.Activity.BookDetailsActivity;
 import com.rich_it.library.Activity.GoogleMapActivity;
+import com.rich_it.library.Activity.NavigationActivity;
+import com.rich_it.library.Activity.PhoneNumberActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
 import com.rich_it.library.Model.Book;
@@ -155,6 +158,8 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Add new book", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), AddBookActivity.class);
+                startActivity(intent);
             }
         });
 

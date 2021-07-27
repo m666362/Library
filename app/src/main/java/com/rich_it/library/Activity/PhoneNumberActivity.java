@@ -16,11 +16,15 @@ import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+import com.rich_it.library.Model.Book;
+import com.rich_it.library.Model.User;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.UserServerCalling;
 
 public class PhoneNumberActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private static final String TAG = PhoneNumberActivity.class.getName();
     TextInputLayout refCodeTextInput ;
     TextInputEditText refCodeEditText;
     TextInputLayout numberTextInput ;
@@ -64,11 +68,8 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
                 // sendVerificationCodeToUser(phoneNumber);
                 break;
             case R.id.skip_button:
-                // todo: show loading
-                // Before moving to next activity hit api to check wheter the ref code exit or not
                 Intent intent = new Intent(PhoneNumberActivity.this, NavigationActivity.class);
                 startActivity(intent);
-                // sendVerificationCodeToUser(phoneNumber);
                 break;
         }
     }
@@ -85,10 +86,13 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onResponse(String response) {
                 // Server calling to create a refer in db
+                User user = new Gson().fromJson(response, User.class);
+                Log.d(TAG, "onResponse: " + user.getName());
                 Toast.makeText(PhoneNumberActivity.this, "valid", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(PhoneNumberActivity.this, VerifyOtpActivity.class);
                 intent.putExtra("phoneNumber", phoneNumber);
+                intent.putExtra("refererId", user.get_id());
                 startActivity(intent);
             }
 
