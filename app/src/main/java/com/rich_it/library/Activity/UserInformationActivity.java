@@ -2,6 +2,7 @@ package com.rich_it.library.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.rich_it.library.Model.User;
+import com.rich_it.library.Others.DialogCaller;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.UserServerCalling;
 
@@ -35,6 +37,9 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     Intent intent;
 
     User user;
+
+    String dialogTitle = "Error";
+    String dialogMessage = "Fullfill required doc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +83,19 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
                 if(validateFrom(user)){
                     createUserAtDb(user);
                 }else{
-                    Toast.makeText(this, "Fullfill required doc", Toast.LENGTH_SHORT).show();
+                    DialogCaller.showErrorAlert(this, dialogTitle, dialogMessage);
                 }
+                break;
+            case R.id.cancel_button:
+                dialogTitle = "Warning";
+                dialogMessage = "If you proceed u will not be registered and wont be able to post your books";
+                DialogCaller.showDialog(this, dialogTitle, dialogMessage, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(UserInformationActivity.this, NavigationActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 break;
         }
     }
@@ -95,8 +111,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onError(ANError anError) {
-                Toast.makeText(UserInformationActivity.this, "error", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onError: " + anError);
+                DialogCaller.showErrorAlert(UserInformationActivity.this, dialogTitle, anError.toString());
             }
         });
     }

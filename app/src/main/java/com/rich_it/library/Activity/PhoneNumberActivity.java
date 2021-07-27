@@ -2,6 +2,7 @@ package com.rich_it.library.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.Model.User;
+import com.rich_it.library.Others.DialogCaller;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.UserServerCalling;
 
@@ -35,6 +37,10 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
     String phoneNumber;
     String refCode;
 
+    String dialogTitle = "ERROR!!!";
+    String dialogMessage = "1. Wrong refer code! \n 2. Please check your internet Connection";
+    DialogCaller dialogCaller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +56,7 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
         numberEditText = findViewById(R.id.number_edit_text);
         sendOtpButton = findViewById(R.id.sendOtpButton);
         skipButton = findViewById(R.id.skip_button);
+        dialogCaller = new DialogCaller(PhoneNumberActivity.this);
     }
 
     private void requiredTask() {
@@ -64,12 +71,19 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
             case R.id.sendOtpButton:
                 // todo: show loading
                 // Before moving to next activity hit api to check wheter the ref code exit or not
+                dialogCaller.showLoading();
                 validateRefAndNumber();
-                // sendVerificationCodeToUser(phoneNumber);
                 break;
             case R.id.skip_button:
-                Intent intent = new Intent(PhoneNumberActivity.this, NavigationActivity.class);
-                startActivity(intent);
+                dialogTitle = "Warning!";
+                dialogMessage = "If you skip u can show content but can't post your books";
+                DialogCaller.showDialog(PhoneNumberActivity.this, dialogTitle, dialogMessage, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(PhoneNumberActivity.this, NavigationActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 break;
         }
     }
@@ -86,11 +100,10 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onResponse(String response) {
                 // Server calling to create a refer in db
+                dialogCaller.dismissDialog();
                 User user = new Gson().fromJson(response, User.class);
-                Log.d(TAG, "onResponse: " + user.getName());
-                Toast.makeText(PhoneNumberActivity.this, "valid", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(PhoneNumberActivity.this, VerifyOtpActivity.class);
+                Intent intent = new Intent(PhoneNumberActivity.this, UserInformationActivity.class);
                 intent.putExtra("phoneNumber", phoneNumber);
                 intent.putExtra("refererId", user.get_id());
                 startActivity(intent);
@@ -98,7 +111,8 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onError(ANError anError) {
-                Toast.makeText(PhoneNumberActivity.this, "Please Enter a valid refer Code", Toast.LENGTH_SHORT).show();
+                dialogCaller.dismissDialog();
+                DialogCaller.showErrorAlert(PhoneNumberActivity.this, dialogTitle, dialogMessage);
             }
         });
     }
