@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.Model.User;
 import com.rich_it.library.Others.DialogCaller;
+import com.rich_it.library.Others.MyConnectionManager;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.UserServerCalling;
 
@@ -71,8 +72,13 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
             case R.id.sendOtpButton:
                 // todo: show loading
                 // Before moving to next activity hit api to check wheter the ref code exit or not
-                dialogCaller.showLoading();
-                validateRefAndNumber();
+                if(MyConnectionManager.isNetworkConnected(PhoneNumberActivity.this)){
+                    dialogCaller.showLoading();
+                    validateRefAndNumber();
+                }else{
+                    dialogMessage = "You are not connected to Internet";
+                    DialogCaller.showErrorAlert(PhoneNumberActivity.this, dialogTitle, dialogMessage);
+                }
                 break;
             case R.id.skip_button:
                 dialogTitle = "Warning!";
