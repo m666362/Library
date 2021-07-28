@@ -16,11 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Library"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.LogInActivity"></activity>
+        <activity android:name=".Activity.SplashActivity"></activity>
+        <activity android:name=".Activity.LogInActivity" />
         <activity android:name=".Activity.AddBookActivity" />
         <activity android:name=".Activity.NavigationActivity" />
         <activity android:name=".Activity.UserInformationActivity" />
-        <activity android:name=".Activity.SplashActivity">
+        <activity android:name=".Activity.PaymentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

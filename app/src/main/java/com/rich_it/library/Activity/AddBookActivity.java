@@ -40,6 +40,7 @@ public class AddBookActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     User user = new Gson().fromJson(response, User.class);
+                    Toast.makeText(AddBookActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "getName: " + user.getName() );
                     Log.d(TAG, "getEmail: " + user.getEmail() );
                     Log.d(TAG, "getPassword: " + user.getPassword() );
