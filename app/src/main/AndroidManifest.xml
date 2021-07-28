@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Library"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.AddBookActivity"></activity>
+        <activity android:name=".Activity.LogInActivity"></activity>
+        <activity android:name=".Activity.AddBookActivity" />
         <activity android:name=".Activity.NavigationActivity" />
         <activity android:name=".Activity.UserInformationActivity" />
         <activity android:name=".Activity.SplashActivity">
@@ -40,7 +41,7 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Activity.BookDetailsActivity" />
-        <activity android:name=".Activity.PhoneNumberActivity"></activity>
+        <activity android:name=".Activity.PhoneNumberActivity" />
         <activity android:name=".Activity.VerifyOtpActivity" />
     </application>
 
