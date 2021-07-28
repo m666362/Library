@@ -10,7 +10,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
+import com.google.gson.Gson;
+import com.rich_it.library.Model.User;
+import com.rich_it.library.Others.DialogCaller;
 import com.rich_it.library.R;
+import com.rich_it.library.ServerCalling.UserServerCalling;
 
 public class AddBookActivity extends AppCompatActivity {
 
@@ -24,14 +30,27 @@ public class AddBookActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
         String _id = sharedPreferences.getString("_id", "");
 
-
-        Toast.makeText(this, "wow u r registered" + _id, Toast.LENGTH_SHORT).show();
-
         if (TextUtils.isEmpty(_id)) {
             Toast.makeText(this, "You are not registered. Please register with Ref code", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AddBookActivity.this, PhoneNumberActivity.class);
             startActivity(intent);
             return; // or break, continue, throw
+        }else{
+            UserServerCalling.getUser(_id, new StringRequestListener() {
+                @Override
+                public void onResponse(String response) {
+                    User user = new Gson().fromJson(response, User.class);
+                    Log.d(TAG, "getName: " + user.getName() );
+                    Log.d(TAG, "getEmail: " + user.getEmail() );
+                    Log.d(TAG, "getPassword: " + user.getPassword() );
+                    Log.d(TAG, "getLocation: " + user.getLocation() );
+                }
+
+                @Override
+                public void onError(ANError anError) {
+                    DialogCaller.showErrorAlert(AddBookActivity.this, "Error", "No user");
+                }
+            });
         }
 
         Log.d(TAG, "onCreate: " + _id);

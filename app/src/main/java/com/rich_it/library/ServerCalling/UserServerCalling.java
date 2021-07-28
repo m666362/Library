@@ -23,6 +23,13 @@ public class UserServerCalling {
                 .getAsString(listener);
     }
 
+    public static void getUser (String _id, StringRequestListener listener) {
+        AndroidNetworking.get(Constant.baseUrl + Constant.users + Constant.byid + _id)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsString(listener);
+    }
+
     public static void createUser (User user, String refererId, StringRequestListener listener) {
         AndroidNetworking.post(Constant.baseUrl + Constant.users)
                 .addBodyParameter(user) // posting java object
