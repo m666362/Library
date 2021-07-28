@@ -22,16 +22,18 @@ public class AddBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_book);
 
         SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        String setting = sharedPreferences.getString("name", "I am default");
-        Toast.makeText(this, "wow u r registered", Toast.LENGTH_SHORT).show();
+        String _id = sharedPreferences.getString("_id", "");
 
-        if (TextUtils.isEmpty(setting)) {
+
+        Toast.makeText(this, "wow u r registered" + _id, Toast.LENGTH_SHORT).show();
+
+        if (TextUtils.isEmpty(_id)) {
             Toast.makeText(this, "You are not registered. Please register with Ref code", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AddBookActivity.this, PhoneNumberActivity.class);
             startActivity(intent);
             return; // or break, continue, throw
         }
 
-        Log.d(TAG, "onCreate: " + setting);
+        Log.d(TAG, "onCreate: " + _id);
     }
 }

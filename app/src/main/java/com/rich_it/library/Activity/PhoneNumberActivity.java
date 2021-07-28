@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +41,7 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
     String refCode;
 
     String dialogTitle = "ERROR!!!";
-    String dialogMessage = "1. Wrong refer code! \n 2. Please check your internet Connection";
+    String dialogMessage = "1. Wrong refer code! \n2. Please check your internet Connection";
     DialogCaller dialogCaller;
 
     @Override
@@ -61,7 +63,17 @@ public class PhoneNumberActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void requiredTask() {
-
+        if(!MyConnectionManager.isNetworkConnected(PhoneNumberActivity.this)){
+            dialogMessage = "Please check your internet connection";
+            DialogCaller.showErrorAlert(PhoneNumberActivity.this, dialogTitle, dialogMessage);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                }
+            }, 2000 );
+//            DialogCaller.showErrorAlert(PhoneNumberActivity.this, dialogTitle, dialogMessage);
+        }
         sendOtpButton.setOnClickListener(this::onClick);
         skipButton.setOnClickListener(this::onClick);
     }

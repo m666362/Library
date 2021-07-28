@@ -2,9 +2,12 @@ package com.rich_it.library.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -16,8 +19,10 @@ import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 import com.rich_it.library.Model.User;
 import com.rich_it.library.Others.DialogCaller;
+import com.rich_it.library.Others.MyConnectionManager;
 import com.rich_it.library.R;
 import com.rich_it.library.ServerCalling.UserServerCalling;
 
@@ -29,6 +34,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     MaterialButton submitButton;
     MaterialButton cancelButton;
 
+    String refererId = "";
     String phoneNumber = "";
     String name;
     String location;
@@ -40,6 +46,9 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
 
     String dialogTitle = "Error";
     String dialogMessage = "Fullfill required doc";
+    DialogCaller dialogCaller;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,7 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     private void initObjects() {
         intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
+        refererId = intent.getStringExtra("refererId");
 
         submitButton = findViewById(R.id.submitButton);
         cancelButton = findViewById(R.id.cancel_button);
@@ -67,9 +77,19 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
         locationEditText = findViewById(R.id.location_edit_text);
         locationTextInput = findViewById(R.id.location_text_input);
 
+        dialogCaller = new DialogCaller(UserInformationActivity.this);
+
+        sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
     }
 
     private void requiredTask() {
+        if(!MyConnectionManager.isNetworkConnected(UserInformationActivity.this)){
+            dialogMessage = "Please check your internet connection";
+            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+//            DialogCaller.showErrorAlert(UserInformationActivity.this, dialogTitle, dialogMessage);
+        }
         phoneNumberEditText.setText(phoneNumber);
         submitButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
@@ -79,11 +99,17 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submitButton:
-                user = getUserInfo();
-                if(validateFrom(user)){
-                    createUserAtDb(user);
+                if(MyConnectionManager.isNetworkConnected(UserInformationActivity.this)){
+                    dialogCaller.showLoading();
+                    user = getUserInfo();
+                    if(validateFrom(user)){
+                        createUserAtDb(user);
+                    }else{
+                        DialogCaller.showErrorAlert(this, dialogTitle, dialogMessage);
+                    }
                 }else{
-                    DialogCaller.showErrorAlert(this, dialogTitle, dialogMessage);
+                    dialogMessage = "You are not connected to Internet";
+                    DialogCaller.showErrorAlert(UserInformationActivity.this, dialogTitle, dialogMessage);
                 }
                 break;
             case R.id.cancel_button:
@@ -101,16 +127,23 @@ public class UserInformationActivity extends AppCompatActivity implements View.O
     }
 
     private void createUserAtDb(User user) {
-        UserServerCalling.createUser(user, new StringRequestListener() {
+        UserServerCalling.createUser(user, refererId, new StringRequestListener() {
             @Override
             public void onResponse(String response) {
                 // Save data at shared pref
+                dialogCaller.dismissDialog();
+
+                User user = new Gson().fromJson(response, User.class);
+                editor.putString("_id", user.get_id());
+                editor.apply();
+
                 Intent intent = new Intent(UserInformationActivity.this, NavigationActivity.class);
                 startActivity(intent);
             }
 
             @Override
             public void onError(ANError anError) {
+                dialogCaller.dismissDialog();
                 DialogCaller.showErrorAlert(UserInformationActivity.this, dialogTitle, anError.toString());
             }
         });

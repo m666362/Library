@@ -40,7 +40,7 @@ public class DialogCaller {
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, onClickListener)
-                .setNegativeButton(android.R.string.no, null)
+                .setNegativeButton(android.R.string.no, onClickListener)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
 

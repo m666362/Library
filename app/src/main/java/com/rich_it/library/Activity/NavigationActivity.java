@@ -68,13 +68,6 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
         setContentView(R.layout.activity_navigation);
 
         // SharedPreferences
-        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        int id = 1;
-        editor.putString("name", "Md Rayhan");
-        editor.putInt("id", id);
-        editor.apply();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
