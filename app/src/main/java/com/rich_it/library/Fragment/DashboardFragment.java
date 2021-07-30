@@ -54,7 +54,6 @@ public class DashboardFragment extends Fragment {
 
     LinearLayoutManager linearLayoutManager;
 
-
     NestedScrollView scrollView;
     ProgressBar progressBar;
     Button getLocationButton;

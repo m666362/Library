@@ -40,7 +40,17 @@ public class DialogCaller {
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, onClickListener)
-                .setNegativeButton(android.R.string.no, onClickListener)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+    }
+
+    public static void showFullDialog(Context context, String title, String message, DialogInterface.OnClickListener positiveButtonOnClickListener, DialogInterface.OnClickListener negativeButtonOnClickListener) {
+        new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, positiveButtonOnClickListener)
+                .setNegativeButton(android.R.string.no, negativeButtonOnClickListener)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
 

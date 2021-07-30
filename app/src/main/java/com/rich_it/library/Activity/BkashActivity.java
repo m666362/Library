@@ -134,10 +134,15 @@ public class BkashActivity extends AppCompatActivity {
     }
 
     private void showCancelAlert() {
-        DialogCaller.showDialog(BkashActivity.this, "Alert", "Do you want to cancel the payment?", new DialogInterface.OnClickListener() {
+        DialogCaller.showFullDialog(BkashActivity.this, "Alert", "Do you want to cancel the payment?", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 BkashActivity.super.onBackPressed();
+            }
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
             }
         });
     }
