@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rich_it.library">
 
+    <queries>
+        <!-- Camera -->
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -16,7 +24,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Library"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.SplashActivity"></activity>
+        <activity android:name=".Activity.BkashActivity"></activity>
+        <activity android:name=".Activity.SplashActivity" />
         <activity android:name=".Activity.LogInActivity" />
         <activity android:name=".Activity.AddBookActivity" />
         <activity android:name=".Activity.NavigationActivity" />
