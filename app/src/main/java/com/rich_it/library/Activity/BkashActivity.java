@@ -6,11 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.rich_it.library.Model.PaymentRequest;
 import com.rich_it.library.Others.DialogCaller;
 import com.rich_it.library.R;
 
@@ -20,6 +23,8 @@ public class BkashActivity extends AppCompatActivity {
     String request;
     TextView textView;
     WebView bkashWebView;
+    WebSettings webSettings;
+    PaymentRequest paymentRequest;
 
     String dialogTitle = "ERROR!!!";
     String dialogMessage = "1. Wrong refer code! \n2. Please check your internet Connection";
@@ -48,15 +53,28 @@ public class BkashActivity extends AppCompatActivity {
         bkashWebView.getSettings().setSupportZoom(true);
         bkashWebView.getSettings().setBuiltInZoomControls(true); // allow pinch to zooom
         bkashWebView.getSettings().setDisplayZoomControls(false); // disable the default zoom controls on the page
-        // Configure the client to use when opening URLs
-        bkashWebView.setWebViewClient(new WebViewClient());
+
+        bkashWebView.setClickable(true);
+        bkashWebView.getSettings().setDomStorageEnabled(true);
+        bkashWebView.getSettings().setAppCacheEnabled(false);
+        bkashWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        bkashWebView.clearCache(true);
+        bkashWebView.getSettings().setAllowFileAccessFromFileURLs(true);
+        bkashWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+
+//        bkashWebView.addJavascriptInterface(new BkashJava);
+
         // Load the initial URL
         bkashWebView.loadUrl("https://www.example.com");
+
+        // Configure the client to use when opening URLs
+        bkashWebView.setWebViewClient(new WebViewClient());
     }
 
     private void initObject() {
         intent = getIntent();
         textView = findViewById(R.id.amountInString);
+        paymentRequest = new PaymentRequest();
         dialogCaller = new DialogCaller(BkashActivity.this);
 
     }
@@ -64,5 +82,11 @@ public class BkashActivity extends AppCompatActivity {
     private void requiredTask() {
         amountInString = intent.getStringExtra("amountInString");
         textView.setText(amountInString);
+        paymentRequest.setAmount(amountInString);
+        paymentRequest.setIntent("sale");
+        Gson gson = new Gson();
+        request = gson.toJson(paymentRequest);
+        webSettings = bkashWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
     }
 }

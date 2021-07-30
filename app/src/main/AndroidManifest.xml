@@ -3,6 +3,7 @@
     package="com.rich_it.library">
 
     <queries>
+
         <!-- Camera -->
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -24,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Library"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.BkashActivity"></activity>
+        <activity android:name=".Activity.PaymentSuccessfullActivity"></activity>
+        <activity android:name=".Activity.BkashActivity" />
         <activity android:name=".Activity.SplashActivity" />
         <activity android:name=".Activity.LogInActivity" />
         <activity android:name=".Activity.AddBookActivity" />
