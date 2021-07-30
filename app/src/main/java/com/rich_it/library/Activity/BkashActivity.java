@@ -2,28 +2,41 @@ package com.rich_it.library.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.rich_it.library.Others.DialogCaller;
 import com.rich_it.library.R;
 
 public class BkashActivity extends AppCompatActivity {
     Intent intent;
     String amountInString;
+    String request;
     TextView textView;
     WebView bkashWebView;
+
+    String dialogTitle = "ERROR!!!";
+    String dialogMessage = "1. Wrong refer code! \n2. Please check your internet Connection";
+    DialogCaller dialogCaller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bkash);
-        setWebView();
+
+        if(getIntent().getExtras() == null){
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            return;
+        }
         initObject();
         requiredTask();
+        setWebView();
     }
 
     private void setWebView() {
@@ -43,11 +56,13 @@ public class BkashActivity extends AppCompatActivity {
 
     private void initObject() {
         intent = getIntent();
-        amountInString = intent.getStringExtra("amountInString");
         textView = findViewById(R.id.amountInString);
+        dialogCaller = new DialogCaller(BkashActivity.this);
+
     }
 
     private void requiredTask() {
+        amountInString = intent.getStringExtra("amountInString");
         textView.setText(amountInString);
     }
 }
