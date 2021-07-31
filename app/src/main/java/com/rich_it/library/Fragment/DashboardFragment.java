@@ -3,6 +3,8 @@ package com.rich_it.library.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,15 +26,14 @@ import org.jetbrains.annotations.NotNull;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.rich_it.library.Activity.AddBookActivity;
 import com.rich_it.library.Activity.BookDetailsActivity;
-import com.rich_it.library.Activity.GoogleMapActivity;
-import com.rich_it.library.Activity.NavigationActivity;
-import com.rich_it.library.Activity.PhoneNumberActivity;
 import com.rich_it.library.Adapter.NearbyBookAdapter;
 import com.rich_it.library.Adapter.SuggestedBookAdapter;
+import com.rich_it.library.BanglaEnglishConverter.RidmikParser;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.Others.GlobalVars;
 import com.rich_it.library.R;
@@ -58,6 +59,11 @@ public class DashboardFragment extends Fragment {
     ProgressBar progressBar;
     Button getLocationButton;
 
+    TextInputLayout searchTextInput ;
+    TextInputEditText searchEditText;
+    FloatingActionButton floatinActionButton;
+    RidmikParser ridmikParser;
+
     int pageNumber = 0;
     int itemsPerPage = 10;
 
@@ -81,7 +87,10 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FloatingActionButton fab = view.findViewById(R.id.fab);
+        ridmikParser = new RidmikParser();
+        floatinActionButton = view.findViewById(R.id.fab);
+        searchTextInput = view.findViewById(R.id.search_text_input);
+        searchEditText = view.findViewById(R.id.search_edit_text);
         progressBar = view.findViewById(R.id.dashpbLoading);
         scrollView = view.findViewById(R.id.parent_scroll);
 //        getLocationButton = view.findViewById(R.id.getLocationButton_f);
@@ -153,7 +162,7 @@ public class DashboardFragment extends Fragment {
             suggestedBookAdapter.setBooks(GlobalVars.bookArrayList);
         }
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        floatinActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Add new book", Toast.LENGTH_SHORT).show();
@@ -162,6 +171,38 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchInArrayList(  s.toString() );
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+    }
+
+    private void searchInArrayList(String searchWord) {
+        Log.d( TAG, "searchInArrayList: " + searchWord );
+
+        ArrayList<Book> searchedBooks = new ArrayList<>();
+
+        for (int i = 0; i < GlobalVars.bookArrayList.size(); i++) {
+            if (GlobalVars.bookArrayList.get( i ).getName().contains( searchWord )
+                    || GlobalVars.bookArrayList.get( i ).getName().contains( ridmikParser.toBangla(searchWord) )) {
+                Log.d(TAG, "searchInArrayList: " + GlobalVars.bookArrayList.get( i ).getAuthor().getName());
+                searchedBooks.add( GlobalVars.bookArrayList.get( i ) );
+            }
+        }
+
+        suggestedBookAdapter.setBooks( searchedBooks );
     }
 
     private void getBooks() {
