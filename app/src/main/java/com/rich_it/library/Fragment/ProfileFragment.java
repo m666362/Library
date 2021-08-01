@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment {
     String password;
 
     User user;
+    Boolean updateMode = false;
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -132,7 +133,7 @@ public class ProfileFragment extends Fragment {
         uploadedBookTV = view.findViewById(R.id.book_uploaded_tv);
 
         nameTI = view.findViewById(R.id.user_profile_name_text_input);
-        nameET = view.findViewById(R.id.user_profile_address_edit_text);
+        nameET = view.findViewById(R.id.user_profile_name_edit_text);
         emailTI = view.findViewById(R.id.user_profile_email_text_input);
         emailET = view.findViewById(R.id.user_profile_email_edit_text);
         addressTI = view.findViewById(R.id.user_profile_address_text_input);
