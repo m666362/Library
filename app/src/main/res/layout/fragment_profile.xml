@@ -1,223 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:padding="20dp"
-        android:background="#fece2f">
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/shrine_logo"
-            android:id="@+id/user_profile_photo"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Md Rayhan"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/user_profile_photo"
-            android:textSize="20sp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/user_profile_name"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+8801766324950"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/user_profile_photo"
-            android:layout_below="@+id/user_profile_name"
-            android:textSize="10sp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/user_phone_number"/>
-
-    </RelativeLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:layout_marginTop="-100dp"
-        android:orientation="horizontal">
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="125dp"
-            app:cardBackgroundColor="#fece2f"
-            app:cardElevation="10dp"
-            android:layout_weight="1"
-            android:layout_margin="10dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="5dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/shrine_logo"
-                    android:layout_centerHorizontal="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1365"
-                    android:textSize="20sp"
-                    android:id="@+id/book_purchased_tv"
-                    android:layout_centerInParent="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Book purchased"
-                    android:textSize="14sp"
-                    android:layout_below="@id/book_purchased_tv"
-                    android:layout_centerHorizontal="true"/>
-
-            </RelativeLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="125dp"
-            app:cardBackgroundColor="#fece2f"
-            app:cardElevation="10dp"
-            android:layout_weight="1"
-            android:layout_margin="10dp">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="5dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/shrine_logo"
-                    android:layout_centerHorizontal="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1365"
-                    android:textSize="20sp"
-                    android:id="@+id/book_uploaded_tv"
-                    android:layout_centerInParent="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Book uploaded"
-                    android:textSize="14sp"
-                    android:layout_below="@id/book_uploaded_tv"
-                    android:layout_centerHorizontal="true"/>
-
-            </RelativeLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/user_profile_name_text_input"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:padding="20dp"
+            android:background="#fece2f">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/shrine_logo"
+                android:id="@+id/user_profile_photo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Md Rayhan"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/user_profile_photo"
+                android:textSize="20sp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/user_profile_name"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+8801766324950"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/user_profile_photo"
+                android:layout_below="@+id/user_profile_name"
+                android:textSize="10sp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/user_phone_number"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:focusedByDefault="true"
-            android:hint="Name">
+            android:padding="20dp"
+            android:layout_marginTop="-100dp"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                app:cardBackgroundColor="#fece2f"
+                app:cardElevation="10dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/shrine_logo"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1365"
+                        android:textSize="20sp"
+                        android:id="@+id/book_purchased_tv"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Book purchased"
+                        android:textSize="14sp"
+                        android:layout_below="@id/book_purchased_tv"
+                        android:layout_centerHorizontal="true"/>
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                app:cardBackgroundColor="#fece2f"
+                app:cardElevation="10dp"
+                android:layout_weight="1"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/shrine_logo"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1365"
+                        android:textSize="20sp"
+                        android:id="@+id/book_uploaded_tv"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Book uploaded"
+                        android:textSize="14sp"
+                        android:layout_below="@id/book_uploaded_tv"
+                        android:layout_centerHorizontal="true"/>
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/user_profile_name_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name"
-                android:id="@+id/user_profile_name_edit_text"
-                android:drawableLeft="@drawable/amu_bubble_shadow"
-                android:drawablePadding="10dp"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/user_profile_email_text_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:focusedByDefault="true"
-            android:hint="Email">
+                android:layout_margin="4dp"
+                android:focusedByDefault="true"
+                android:hint="Name">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:id="@+id/user_profile_name_edit_text"
+                    android:drawableLeft="@drawable/amu_bubble_shadow"
+                    android:drawablePadding="10dp"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/user_profile_email_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="email"
-                android:id="@+id/user_profile_email_edit_text"
-                android:drawableLeft="@drawable/amu_bubble_shadow"
-                android:drawablePadding="10dp"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/user_profile_address_text_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:focusedByDefault="true"
-            android:hint="Address">
+                android:layout_margin="4dp"
+                android:focusedByDefault="true"
+                android:hint="Email">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="email"
+                    android:id="@+id/user_profile_email_edit_text"
+                    android:drawableLeft="@drawable/amu_bubble_shadow"
+                    android:drawablePadding="10dp"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/user_profile_address_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Address"
-                android:id="@+id/user_profile_address_edit_text"
-                android:drawableLeft="@drawable/amu_bubble_shadow"
-                android:drawablePadding="10dp"
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/user_profile_password_text_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:focusedByDefault="true"
-            android:hint="Password">
+                android:layout_margin="4dp"
+                android:focusedByDefault="true"
+                android:hint="Address">
 
-            <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:id="@+id/user_profile_address_edit_text"
+                    android:drawableLeft="@drawable/amu_bubble_shadow"
+                    android:drawablePadding="10dp"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/user_profile_password_text_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Address"
-                android:id="@+id/user_profile_password_edit_text"
-                android:drawableLeft="@drawable/amu_bubble_shadow"
-                android:drawablePadding="10dp"
-                android:inputType="textPassword"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Update"
-            android:backgroundTint="#fece2f"
-            android:id="@+id/update_user_button"/>
+                android:layout_margin="4dp"
+                android:focusedByDefault="true"
+                android:hint="Password">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:id="@+id/user_profile_password_edit_text"
+                    android:drawableLeft="@drawable/amu_bubble_shadow"
+                    android:drawablePadding="10dp"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:backgroundTint="#fece2f"
+                android:id="@+id/update_user_button"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
 
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>
