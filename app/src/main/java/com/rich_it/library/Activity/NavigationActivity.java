@@ -67,8 +67,6 @@ public class NavigationActivity extends AppCompatActivity implements DrawerAdapt
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_navigation);
 
-        // SharedPreferences
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         slidingRootNav = new SlidingRootNavBuilder(this)

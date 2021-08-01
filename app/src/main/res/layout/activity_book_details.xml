@@ -1,37 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".Activity.BookDetailsActivity">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#fece2f">
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/human"
-            android:id="@+id/book_cover_iv_detailsA"/>
+            android:layout_marginTop="-180dp"
+            android:layout_marginBottom="-50dp"
+            >
+
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="400dp"
+                android:src="@drawable/human"
+                android:layout_centerInParent="true"
+                android:id="@+id/book_cover_iv_detailsA"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/book_categories_tv_detailsA"
+                android:layout_marginRight="10dp"
+                android:text="Genre : "/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/category_recycler_view"
+                android:layout_toRightOf="@+id/book_categories_tv_detailsA"/>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:id="@+id/book_categories_tv_detailsA"
-            android:text="book categoris"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:padding="20dp"
+            android:textSize="36sp"
             android:id="@+id/book_name_tv_detailsA"
-            android:text="book Name"/>
+            android:text="Shahitto Konika"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,33 +82,41 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_centerInParent="true"
                 android:id="@+id/book_author_tv_detailsA"
                 android:text="Author Name"/>
 
         </LinearLayout>
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Free Preview"
-            android:id="@+id/book_free_preview_button_detailsA"/>
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read Some Pages"
+                android:id="@+id/book_free_preview_button_detailsA"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_horizontal"
+            android:paddingHorizontal="20dp"
             android:id="@+id/book_price_buy_cart_ll_detailsA">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_centerInParent="true"
                 android:id="@+id/book_price_tv_detailsA"
-                android:text="Author Name"/>
+                android:text="24 BDT"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -85,20 +125,13 @@
                 android:text="Buy Now"
                 android:id="@+id/book_buy_now_button_detailsA"/>
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_baseline_account_circle_24"
-                android:id="@+id/book_cart_iv_detailsA"/>
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="20dp"
             android:id="@+id/book_bio_review_cart_ll_detailsA">
 
             <TextView
@@ -106,65 +139,19 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_centerInParent="true"
-                android:id="@+id/book_bio_tv_Button_detailsA"
                 android:text="Summary"/>
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Review"
-                android:id="@+id/book_review_button_detailsA"/>
-
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:id="@+id/book_bio_tv_detailsA"
-            android:text="Summary of the book"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:id="@+id/book_suggested_categories_tv_detailsA"
-            android:text="Summary of the book"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            android:id="@+id/book_write_review_ll_detailsA">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="book_show_dialog_review_button_detailsA"
-                android:id="@+id/book_show_dialog_review_button_detailsA"/>
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_baseline_account_circle_24" />
+                android:layout_centerInParent="true"
+                android:id="@+id/book_bio_tv_Button_detailsA"
+                android:text="Summary ......."/>
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Related books"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/related_book_rv_detailsA"/>
     </LinearLayout>
 
 </ScrollView>

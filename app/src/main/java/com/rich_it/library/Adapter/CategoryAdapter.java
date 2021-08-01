@@ -31,18 +31,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     @NotNull
     @Override
     public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.category, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.categories_details_activity_layout_rv, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull CategoryAdapter.ViewHolder holder, int position) {
         holder.categoryName.setText(categories.get(position).getName());
-        Picasso
-                .get()
-                .load(categories.get(position).getIcon())
-                .noFade()
-                .into(holder.categoryIcon);
     }
 
     @Override
@@ -57,11 +52,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView categoryName;
-        ImageView categoryIcon;
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            categoryName = itemView.findViewById(R.id.categoryName);
-            categoryIcon = itemView.findViewById(R.id.categoryIcon);
+            categoryName = itemView.findViewById(R.id.category_layout_tv);
         }
     }
 }
