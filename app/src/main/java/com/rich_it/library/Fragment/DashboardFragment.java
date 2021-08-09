@@ -160,6 +160,7 @@ public class DashboardFragment extends Fragment {
             getBooks();
         } else {
             suggestedBookAdapter.setBooks(GlobalVars.bookArrayList);
+            nearbyBookAdapter.setBooks(GlobalVars.bookArrayList);
         }
 
         floatinActionButton.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +204,7 @@ public class DashboardFragment extends Fragment {
         }
 
         suggestedBookAdapter.setBooks( searchedBooks );
+        nearbyBookAdapter.setBooks( searchedBooks );
     }
 
     private void getBooks() {
@@ -214,8 +216,10 @@ public class DashboardFragment extends Fragment {
 
                 if (pageNumber == 0) {
                     suggestedBookAdapter.setBooks(new ArrayList<>(Arrays.asList(new Gson().fromJson(response, Book[].class))));
+                    nearbyBookAdapter.setBooks(new ArrayList<>(Arrays.asList(new Gson().fromJson(response, Book[].class))));
                 } else {
                     suggestedBookAdapter.addBooks(new ArrayList<>(Arrays.asList(new Gson().fromJson(response, Book[].class))));
+                    nearbyBookAdapter.addBooks(new ArrayList<>(Arrays.asList(new Gson().fromJson(response, Book[].class))));
                 }
 
                 GlobalVars.bookArrayList = (ArrayList<Book>) suggestedBookAdapter.getBooks();

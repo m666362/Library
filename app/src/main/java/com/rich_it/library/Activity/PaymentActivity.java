@@ -2,24 +2,34 @@ package com.rich_it.library.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
+import com.rich_it.library.Model.User;
 import com.rich_it.library.Others.DialogCaller;
 import com.rich_it.library.Others.MyConnectionManager;
 import com.rich_it.library.R;
+import com.rich_it.library.ServerCalling.UserServerCalling;
 
 public class PaymentActivity extends AppCompatActivity implements View.OnClickListener {
+
 
     private static final String TAG = PaymentActivity.class.getName();
     TextInputLayout amountTextInput ;
@@ -33,12 +43,43 @@ public class PaymentActivity extends AppCompatActivity implements View.OnClickLi
     String dialogTitle = "ERROR!!!";
     String dialogMessage = "1. Wrong refer code! \n2. Please check your internet Connection";
     DialogCaller dialogCaller;
+    User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         initObject();
+        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        String _id = sharedPreferences.getString("_id", "");
+        dialogCaller.showLoading();
+
+        if (TextUtils.isEmpty(_id)) {
+            Toast.makeText(this, "You are not registered. Please register with Ref code", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PaymentActivity.this, PhoneNumberActivity.class);
+            startActivity(intent);
+            dialogCaller.dismissDialog();
+//            return; // or break, continue, throw
+        }else{
+            UserServerCalling.getUser(_id, new StringRequestListener() {
+                @Override
+                public void onResponse(String response) {
+                    user = new Gson().fromJson(response, User.class);
+                    Toast.makeText(PaymentActivity.this, user.getName(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "getName: " + user.getName() );
+                    Log.d(TAG, "getEmail: " + user.getEmail() );
+                    Log.d(TAG, "getPassword: " + user.getPassword() );
+                    Log.d(TAG, "getLocation: " + user.getLocation() );
+                    dialogCaller.dismissDialog();
+                }
+
+                @Override
+                public void onError(ANError anError) {
+                    DialogCaller.showErrorAlert(PaymentActivity.this, "Error", "No user");
+                }
+            });
+        }
         requiredTask();
     }
 

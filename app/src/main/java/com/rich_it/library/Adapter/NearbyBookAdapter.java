@@ -1,6 +1,7 @@
 package com.rich_it.library.Adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,12 +40,24 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
     public void onBindViewHolder(@NonNull @NotNull NearbyBookAdapter.ViewHolder holder, int position) {
         Book book = books.get(position);
         holder.nameTv.setText(book.getName());
-        holder.authorTv.setText(book.getAuthor().getName());
+//        if(TextUtils.isEmpty(book.getAuthor().getName())){
+//        }else{
+////            holder.authorTv.setText(book.getAuthor().getName());
+//            holder.authorTv.setText("Unknown Author");
+//
+//        }
+        holder.authorTv.setText("Unknown Author");
+
         Picasso.get().load(book.getCoverPage()).into(holder.coverIv);
     }
 
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
+        notifyDataSetChanged();
+    }
+
+    public void addBooks(ArrayList<Book> books) {
+        this.books.addAll(books);
         notifyDataSetChanged();
     }
 

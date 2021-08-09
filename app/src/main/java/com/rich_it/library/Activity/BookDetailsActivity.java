@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.rich_it.library.Adapter.CategoryAdapter;
 import com.rich_it.library.Model.Author;
 import com.rich_it.library.Model.Book;
+import com.rich_it.library.Model.Publication;
 import com.rich_it.library.Model.User;
 import com.rich_it.library.Others.DialogCaller;
 import com.rich_it.library.Others.MyConnectionManager;
@@ -26,6 +27,7 @@ public class BookDetailsActivity extends AppCompatActivity implements View.OnCli
     Book book;
     Author author;
     User owner;
+    Publication publication;
 
     TextView bookNameTv;
     ImageView coverImageView;
@@ -42,8 +44,14 @@ public class BookDetailsActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
         book = (Book) getIntent().getSerializableExtra("Book");
-        author = book.getAuthor();
         owner = book.getOwner();
+        try{
+            publication = book.getPublication();
+            author = book.getAuthor();
+        }catch (Exception e){
+            publication = new Publication("Unknown Publication");
+            author = new Author("Unknown Author");
+        }
         Log.d(TAG, "onCreate: " + author.getName());
         Log.d(TAG, "onCreate: " + book.getName());
         Log.d(TAG, "onCreate: " + owner.getName());

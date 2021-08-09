@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.rich_it.library.Model.Book;
 import com.rich_it.library.Model.User;
 
 public class Validation {
@@ -20,4 +21,21 @@ public class Validation {
             return true;
         }
     }
+
+//    public static boolean validateBookInformation(Book book) {
+//        publication
+//
+//        freePages
+//                description
+//        actualPrice
+//                rent
+//        duration
+//        if (TextUtils.isEmpty(book.getName()) || TextUtils.isEmpty(user.getEmail()) ||
+//                TextUtils.isEmpty(user.getLocation()) || TextUtils.isEmpty(user.getPassword()) ||
+//                user.getPassword().length() < 6 || !Patterns.EMAIL_ADDRESS.matcher(user.getEmail()).matches()) {
+//            return false;
+//        }else {
+//            return true;
+//        }
+//    }
 }

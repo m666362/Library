@@ -7,3 +7,4 @@ import java.util.ArrayList;
 public class GlobalVars {
     public static ArrayList<Book> bookArrayList = new ArrayList<>();
 }
+

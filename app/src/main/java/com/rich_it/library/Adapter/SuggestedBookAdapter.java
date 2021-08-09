@@ -1,6 +1,7 @@
 package com.rich_it.library.Adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.rich_it.library.Model.Author;
 import com.rich_it.library.Model.Book;
 import com.rich_it.library.R;
 import com.squareup.picasso.Picasso;
@@ -39,7 +41,13 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
     public void onBindViewHolder(@NonNull @NotNull SuggestedBookAdapter.ViewHolder holder, int position) {
         Book book = books.get(position);
         holder.name.setText(book.getName());
-        holder.author.setText(book.getAuthor().getName());
+//        if(TextUtils.isEmpty(book.getAuthor().getName())){
+//            holder.author.setText("Unknown Author");
+//        }else{
+////            holder.author.setText(book.getAuthor().getName());
+//            holder.author.setText("Unknown Author");
+//        }
+        holder.author.setText("Unknown Author");
         holder.pageNumber.setText("Page: " + String.valueOf(book.getRent()));
         holder.price.setText("BDT: " + String.valueOf(book.getActualPrice()));
         Picasso.get().load(book.getCoverPage()).into(holder.coverIv);

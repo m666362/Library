@@ -29,6 +29,14 @@ public class Book implements Parcelable, Serializable {
         this.name = name;
     }
 
+    public Book(String name, User owner, String description, int rent, int duration) {
+        this.name = name;
+        this.owner = owner;
+        this.description = description;
+        this.rent = rent;
+        this.duration = duration;
+    }
+
     public Book(String _id, String name, Author author, Publication publication, String coverPage, User owner, String freePages, String description, ArrayList<Category> categories, int actualPrice, int rent, int duration, String createdAt, String updatedAt, String __v) {
         this._id = _id;
         this.name = name;

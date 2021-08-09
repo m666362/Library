@@ -29,10 +29,10 @@
         <activity android:name=".Activity.BkashActivity" />
         <activity android:name=".Activity.SplashActivity" />
         <activity android:name=".Activity.LogInActivity" />
-        <activity android:name=".Activity.AddBookActivity" />
+        <activity android:name=".Activity.PaymentActivity" />
         <activity android:name=".Activity.NavigationActivity" />
         <activity android:name=".Activity.UserInformationActivity" />
-        <activity android:name=".Activity.PaymentActivity">
+        <activity android:name=".Activity.AddBookActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
