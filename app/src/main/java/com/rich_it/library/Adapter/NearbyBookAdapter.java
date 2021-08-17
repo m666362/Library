@@ -18,11 +18,13 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.ViewHolder> {
     Context context;
     List<Book> books = new ArrayList<>();
+    List<String> words;
 
     public NearbyBookAdapter(Context context) {
         this.context = context;
@@ -39,16 +41,17 @@ public class NearbyBookAdapter extends RecyclerView.Adapter<NearbyBookAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull @NotNull NearbyBookAdapter.ViewHolder holder, int position) {
         Book book = books.get(position);
-        holder.nameTv.setText(book.getName());
+        words = Arrays.asList(book.getName().split(","));
+        holder.nameTv.setText(words.get(0));
 //        if(TextUtils.isEmpty(book.getAuthor().getName())){
 //        }else{
 ////            holder.authorTv.setText(book.getAuthor().getName());
 //            holder.authorTv.setText("Unknown Author");
 //
 //        }
-        holder.authorTv.setText("Unknown Author");
+        holder.authorTv.setText(words.get(1));
 
-        Picasso.get().load(book.getCoverPage()).into(holder.coverIv);
+        Picasso.get().load("https://img.freepik.com/free-psd/book-cover-mockup_125540-453.jpg?size=626&ext=jpg&ga=GA1.2.1937619873.1628553600").into(holder.coverIv);
     }
 
     public void setBooks(ArrayList<Book> books) {

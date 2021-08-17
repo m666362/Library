@@ -196,9 +196,8 @@ public class DashboardFragment extends Fragment {
         ArrayList<Book> searchedBooks = new ArrayList<>();
 
         for (int i = 0; i < GlobalVars.bookArrayList.size(); i++) {
-            if (GlobalVars.bookArrayList.get( i ).getName().contains( searchWord )
+            if (GlobalVars.bookArrayList.get( i ).getName().toLowerCase().contains( searchWord.toLowerCase() )
                     || GlobalVars.bookArrayList.get( i ).getName().contains( ridmikParser.toBangla(searchWord) )) {
-                Log.d(TAG, "searchInArrayList: " + GlobalVars.bookArrayList.get( i ).getAuthor().getName());
                 searchedBooks.add( GlobalVars.bookArrayList.get( i ) );
             }
         }

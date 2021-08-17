@@ -19,11 +19,13 @@ import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdapter.ViewHolder> {
     Context context;
     List<Book> books = new ArrayList<>();
+    List<String> words;
 
     public SuggestedBookAdapter(Context context) {
         this.context = context;
@@ -40,17 +42,18 @@ public class SuggestedBookAdapter extends RecyclerView.Adapter<SuggestedBookAdap
     @Override
     public void onBindViewHolder(@NonNull @NotNull SuggestedBookAdapter.ViewHolder holder, int position) {
         Book book = books.get(position);
-        holder.name.setText(book.getName());
+        words = Arrays.asList(book.getName().split(","));
+        holder.name.setText(words.get(0));
 //        if(TextUtils.isEmpty(book.getAuthor().getName())){
 //            holder.author.setText("Unknown Author");
 //        }else{
 ////            holder.author.setText(book.getAuthor().getName());
 //            holder.author.setText("Unknown Author");
 //        }
-        holder.author.setText("Unknown Author");
-        holder.pageNumber.setText("Page: " + String.valueOf(book.getRent()));
-        holder.price.setText("BDT: " + String.valueOf(book.getActualPrice()));
-        Picasso.get().load(book.getCoverPage()).into(holder.coverIv);
+        holder.author.setText(words.get(1));
+        holder.pageNumber.setText( String.valueOf(book.getDuration()) + " days");
+        holder.price.setText("BDT: " + String.valueOf(book.getRent()));
+        Picasso.get().load("https://img.freepik.com/free-psd/book-cover-mockup_125540-453.jpg?size=626&ext=jpg&ga=GA1.2.1937619873.1628553600").into(holder.coverIv);
     }
 
     public void setBooks(ArrayList<Book> books) {

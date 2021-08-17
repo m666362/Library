@@ -185,8 +185,8 @@ public class AddBookActivity extends AppCompatActivity implements View.OnClickLi
     private Book getBookInformation() {
 
         bookName = bookNameEditText.getText().toString().trim()
-                + "-" + authorNameEditText.getText().toString().trim()
-                + "-" + publicationNameEditText.getText().toString().trim();
+                + "," + authorNameEditText.getText().toString().trim()
+                + "," + publicationNameEditText.getText().toString().trim();
         authorName = authorNameEditText.getText().toString().trim();
         publicationName = publicationNameEditText.getText().toString().trim();
         description = descriptionEditText.getText().toString().trim();
